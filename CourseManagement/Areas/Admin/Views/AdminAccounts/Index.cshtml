@@ -1,0 +1,164 @@
+﻿@using PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<CourseManagement.Models.Account>
+
+@{
+    ViewData["Title"] = "Quản lý tài khoản";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<!-- Page Title -->
+<div class="pagetitle">
+    <h1>@ViewData["Title"]</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"> <a asp-area="Admin" asp-controller="Home" asp-action="Index">Trang chủ Admin</a> </li>
+            <li class="breadcrumb-item active">@ViewData["Title"]</li>
+        </ol>
+    </nav>
+</div>
+<!-- End Page Title -->
+<!-- Section -->
+<section class="section">
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="card">
+                <div class="card-body">
+
+
+                    <!-- Card Title -->
+                    <div class="card-title">
+                        <a type="button" class="btn btn-outline-primary" asp-action="Create" asp-area="Admin" asp-controller="AdminAccounts">
+                            <i class="bi bi-person-plus"></i> Tạo mới
+                        </a>
+                    </div>
+                    <!-- End Card Title -->
+                    <!-- Table -->
+                    <table class="table">
+                        <thead>
+                            <tr class="table-primary text-center">
+                                <th scope="col">Tài khoản</th>
+                                <th scope="col">Họ và tên</th>
+                                <th scope="col">Số điện thoại</th>
+                                <th scope="col">Kích hoạt</th>
+
+                                <th scope="col">
+                                    <select class="form-select text-center" id="textIdRole" name="IdRole" style="min-width: 200px;" asp-items="ViewBag.IdRole" onselect="ViewBag.CurrentIdRole">
+                                        <option value="0">Tất cả quyền</option>
+                                    </select>
+                                </th>
+
+                                <th scope="col">Thêm</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr class="text-center">
+                                    <th scope="row">@item.Username</th>
+                                    <td>
+                                        @item.Fullname
+                                    </td>
+                                    <td>
+                                        @item.Phone
+                                    </td>
+
+                                    @if (@item.Active == true)
+                                    {
+                                        <td class="text-success">
+                                            <i class="bi bi-shield-check"></i> <b>Cho phép</b>
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-danger">
+                                            <i class="bi bi-shield-slash"></i> <b>Bị khóa</b>
+                                        </td>
+                                    }
+
+                                    <td>
+                                        @item.IdRoleNavigation.Name
+                                    </td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <a type="button" class="btn btn-outline-warning" asp-action="Edit" asp-area="Admin" asp-controller="AdminAccounts" asp-route-id="@item.IdAccount">
+                                                <i class="bi bi-pencil-square"></i> Chỉnh sửa
+                                            </a>
+                                            <a type="button" class="btn btn-outline-info" asp-action="Details" asp-area="Admin" asp-controller="AdminAccounts" asp-route-id="@item.IdAccount">
+                                                <i class="bi bi-info-circle"></i> Chi tiết
+                                            </a>
+                                            <a type="button" class="btn btn-outline-danger" asp-action="Delete" asp-area="Admin" asp-controller="AdminAccounts" asp-route-id="@item.IdAccount">
+                                                <i class="bi bi-eraser-fill"></i> Xóa
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <!-- End Table -->
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!-- End Section -->
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+
+            $("#textIdRole option[value=@ViewBag.CurrentIdRole]").prop('selected', true);
+
+            jQuery("#textIdRole").change(function () {
+
+                var IdRole = parseInt(jQuery(this).children(":selected").attr("value"));
+                $("#textIdRole > [value=" + IdRole + "]").attr("selected", true);
+                $.ajax({
+                    url: '/Admin/FindAndFilter/FiltterAccounts',
+                    datatype: "json",
+                    type: "GET",
+                    data: {
+                        IdRole: IdRole
+                    },
+                    async: true,
+                    success: function (results) {
+                        if (results.status == "success") {
+                            window.location.href = results.redirectUrl;
+                        }
+                    },
+                    error: function (xhr) {
+                        alert('error');
+                    }
+                });
+            });
+
+            $("#textKeyWord").keyup(function () {
+                var strKeyWord = $('#textKeyWord').val();
+                var strIdRole = @ViewBag.CurrentIdRole;
+
+                $.ajax({
+                    url: '/Admin/FindAndFilter/FindAccounts/',
+                    datatype: "json",
+                    type: "POST",
+                    data: {
+                        keyword: strKeyWord,
+                        IdRole: strIdRole
+                    },
+                    async: true,
+                    success: function (results) {
+                        $("#records_table").html("");
+                        $("#records_table").html(results);
+                    },
+                    error: function (xhr) {
+                        alert('error');
+                    }
+                });
+            });
+        });
+    </script>
+}
