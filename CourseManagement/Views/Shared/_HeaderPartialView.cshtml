@@ -26,11 +26,6 @@
                                                 Register
                                             </a>
                                         </li>
-                                        <li class="d-none d-md-block">
-                                            <a href="wishlist.html">
-                                                <i class="pe-7s-like"></i>
-                                            </a>
-                                        </li>
                                         <li class="d-block d-lg-none">
                                             <a href="#searchBar" class="search-btn toolbar-btn">
                                                 <i class="pe-7s-search"></i>
@@ -92,22 +87,22 @@
                             <nav class="offcanvas-navigation">
                                 <ul class="mobile-menu">
                                     <li>
-                                        <a href="#">
+                                        <a asp-area="" asp-controller="Home" asp-action="Index">
                                             <span class="mm-text">Home</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="about.html">
-                                            <span class="mm-text">About Us</span>
+                                        <a asp-area="" asp-controller="Home" asp-action="About">
+                                            <span class="mm-text">About</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="contact.html">
-                                             <span class="mm-text">Course</span>
+                                        <a asp-area="" asp-controller="Home" asp-action="Courses">
+                                             <span class="mm-text">Courses</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="contact.html">
+                                        <a asp-area="" asp-controller="Home" asp-action="Contact">
                                             <span class="mm-text">Contact</span>
                                         </a>
                                     </li>
@@ -133,60 +128,61 @@
                     </div>
                 </div>
             </div>
-            <div class="offcanvas-minicart_wrapper" id="miniCart">
-                <div class="harmic-offcanvas-body">
-                    <div class="minicart-content">
-                        <div class="minicart-heading">
-                            <h4 class="mb-0">Shopping Cart</h4>
-                            <a href="#" class="button-close"><i class="pe-7s-close"></i></a>
-                        </div>
-                        <ul class="minicart-list">
-                            <li class="minicart-product">
-                                <a class="product-item_remove" href="#"><i
-                                    class="pe-7s-close"></i></a>
-                                <a href="shop.html" class="product-item_img">
-                                    <img class="img-full" src="~/Main/assets/images/product/small-size/1-1-112x124.jpg" alt="Product Image">
-                                </a>
-                                <div class="product-item_content">
-                                    <a class="product-item_title" href="shop.html">Black Pepper Grains</a>
-                                    <span class="product-item_quantity">1 x $80.00</span>
-                                </div>
-                            </li>
-                            <li class="minicart-product">
-                                <a class="product-item_remove" href="#"><i
-                                    class="pe-7s-close"></i></a>
-                                <a href="shop.html" class="product-item_img">
-                                    <img class="img-full" src="~/Main/assets/images/product/small-size/1-2-112x124.jpg" alt="Product Image">
-                                </a>
-                                <div class="product-item_content">
-                                    <a class="product-item_title" href="shop.html">Peanut Big Bean</a>
-                                    <span class="product-item_quantity">1 x $80.00</span>
-                                </div>
-                            </li>
-                            <li class="minicart-product">
-                                <a class="product-item_remove" href="#">
-                                    <i class="pe-7s-close"></i>
-                                </a>
-                                <a href="shop.html" class="product-item_img">
-                                    <img class="img-full" src="~/Main/assets/images/product/small-size/1-3-112x124.jpg" alt="Product Image">
-                                </a>
-                                <div class="product-item_content">
-                                    <a class="product-item_title" href="shop.html">Dried Lemon Green</a>
-                                    <span class="product-item_quantity">1 x $80.00</span>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="minicart-item_total">
-                        <span>Subtotal</span>
-                        <span class="ammount">$240.00</span>
-                    </div>
-                    <div class="group-btn_wrap d-grid gap-2">
-                        <a href="cart.html" class="btn btn-secondary btn-primary-hover">View Cart</a>
-                        <a href="checkout.html" class="btn btn-secondary btn-primary-hover">Checkout</a>
-                    </div>
+    <div class="offcanvas-minicart_wrapper" id="miniCart">
+        <div class="harmic-offcanvas-body">
+            <div class="minicart-content">
+                <div class="minicart-heading">
+                    <h4 class="mb-0">Shopping Cart</h4>
+                    <a href="#" class="button-close"><i class="pe-7s-close"></i></a>
                 </div>
+                <ul class="minicart-list">
+                    <li class="minicart-product">
+                        <a class="product-item_remove" href="#">
+                            <i class="pe-7s-close"></i>
+                        </a>
+                        <a href="shop.html" class="product-item_img">
+                            <img class="img-full" src="../Main/assets/images/product/small-size/1-1-112x124.jpg" alt="Product Image">
+                        </a>
+                        <div class="product-item_content">
+                            <a class="product-item_title" href="shop.html">Black Pepper Grains</a>
+                            <span class="product-item_quantity">1 x $80.00</span>
+                        </div>
+                    </li>
+                    <li class="minicart-product">
+                        <a class="product-item_remove" href="#">
+                            <i class="pe-7s-close"></i>
+                        </a>
+                        <a href="shop.html" class="product-item_img">
+                            <img class="img-full" src="../Main/assets/images/product/small-size/1-2-112x124.jpg" alt="Product Image">
+                        </a>
+                        <div class="product-item_content">
+                            <a class="product-item_title" href="shop.html">Peanut Big Bean</a>
+                            <span class="product-item_quantity">1 x $80.00</span>
+                        </div>
+                    </li>
+                    <li class="minicart-product">
+                        <a class="product-item_remove" href="#">
+                            <i class="pe-7s-close"></i>
+                        </a>
+                        <a href="shop.html" class="product-item_img">
+                            <img class="img-full" src="../Main/assets/images/product/small-size/1-3-112x124.jpg" alt="Product Image">
+                        </a>
+                        <div class="product-item_content">
+                            <a class="product-item_title" href="shop.html">Dried Lemon Green</a>
+                            <span class="product-item_quantity">1 x $80.00</span>
+                        </div>
+                    </li>
+                </ul>
             </div>
-            <div class="global-overlay"></div>
+            <div class="minicart-item_total">
+                <span>Subtotal</span>
+                <span class="ammount">$240.00</span>
+            </div>
+            <div class="group-btn_wrap d-grid gap-2">
+                <a asp-area="" asp-controller="Home" asp-action="Cart" class="btn btn-secondary btn-primary-hover">View Cart</a>
+            </div>
+        </div>
+    </div>
+    <div class="global-overlay"></div>
         </header>
         <!-- Main Header Area End Here -->

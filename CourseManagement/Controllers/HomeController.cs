@@ -24,8 +24,8 @@ namespace CourseManagement.Controllers
 
         public IActionResult Index()
         {
-            _notyf.Custom("Custom Notification - closes in 5 seconds.", 5, "whitesmoke", "fa fa-gear");
-            _notyf.Custom("Custom Notification - closes in 10 seconds.", 10, "#B600FF", "fa fa-home");
+            //_notyf.Custom("Custom Notification - closes in 5 seconds.", 5, "whitesmoke", "fa fa-gear");
+            //_notyf.Custom("Custom Notification - closes in 10 seconds.", 10, "#B600FF", "fa fa-home");
             return View();
         }
 
@@ -73,6 +73,12 @@ namespace CourseManagement.Controllers
 
         // GET: Home/Register
         public IActionResult Register()
+        {
+            return View();
+        }
+
+        // GET: Home/Cart
+        public IActionResult Cart()
         {
             return View();
         }
