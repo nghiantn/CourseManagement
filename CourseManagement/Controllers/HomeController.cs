@@ -46,5 +46,35 @@ namespace CourseManagement.Controllers
         {
             return View();
         }
+
+        // GET: Home/About
+        public IActionResult About()
+        {
+            return View();
+        }
+
+        // GET: Home/Courses
+        public IActionResult Courses()
+        {
+            return View();
+        }
+
+        // GET: Home/Contact
+        public IActionResult Contact()
+        {
+            return View();
+        }
+
+        // GET: Home/Login
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        // GET: Home/Register
+        public IActionResult Register()
+        {
+            return View();
+        }
     }
 }
