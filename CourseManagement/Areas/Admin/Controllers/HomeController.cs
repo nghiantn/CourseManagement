@@ -1,5 +1,6 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using CourseManagement.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -13,12 +14,18 @@ namespace CourseManagement.Areas.Admin.Controllers
     public class HomeController : Controller
     {
         [Area("Admin")]
-        //[Authorize]
-        //[Route("admin.khoahoc", Name = "Index")]
-        
+        [Authorize]
+        [Route("admin.khoahoc", Name = "Index")]
         public IActionResult Index()
         {
             return View();
         }
+
+        //[AllowAnonymous]
+        //[Route("admin.loi", Name = "Error")]
+        //public IActionResult AdminError()
+        //{
+        //    return View();
+        //}
     }
 }

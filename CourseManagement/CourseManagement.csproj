@@ -19,8 +19,17 @@
 
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="wwwroot\Main\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\Home\Details.cshtml" />
+    <None Include="Views\Home\Index.cshtml" />
+    <None Include="Views\Home\Privacy.cshtml" />
+    <None Include="Views\Shared\Error.cshtml" />
+    <None Include="Views\Shared\_FooterPartialView.cshtml" />
+    <None Include="Views\Shared\_HeaderPartialView.cshtml" />
+    <None Include="Views\Shared\_Layout.cshtml" />
+    <None Include="Views\Shared\_ValidationScriptsPartial.cshtml" />
   </ItemGroup>
 
 </Project>

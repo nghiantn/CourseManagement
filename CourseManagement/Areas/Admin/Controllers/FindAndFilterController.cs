@@ -12,8 +12,7 @@ using CourseManagement.Models;
 namespace CourseManagement.Areas.Admin.Controllers
 {
     [Area("Admin")]
-
-   
+    [Authorize]
     public class FindAndFilterController : Controller
     {
         private readonly CourseDatabaseContext _context;

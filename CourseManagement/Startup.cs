@@ -4,11 +4,13 @@ using CourseManagement.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,16 +42,18 @@ namespace CourseManagement
                 .AddCookie(p =>
                 {
                     p.Cookie.Name = "UserLoginCookie";
-                    p.ExpireTimeSpan = TimeSpan.FromDays(1);
+                    p.ExpireTimeSpan = TimeSpan.FromSeconds(30);
                     p.LoginPath = "/dang-nhap.html";
                     p.LogoutPath = "/dang-xuat.html";
+                    //p.AccessDeniedPath = "/admin.loi";
+                    p.AccessDeniedPath = "/admin.khoahoc";
                 });
 
             services.AddNotyf(config =>
             {
                 config.DurationInSeconds = 3;
                 config.IsDismissable = true;
-                config.Position = NotyfPosition.BottomRight;
+                config.Position = NotyfPosition.TopCenter;
             });
 
             services.AddControllersWithViews();

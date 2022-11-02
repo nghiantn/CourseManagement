@@ -1,6 +1,8 @@
 ﻿@{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var course = ViewBag.course;
 }
 
 <!-- Begin Main Content Area  -->
@@ -27,8 +29,8 @@
             <div class="row">
                 <div class="col-lg-4">
                     <div class="single-product-img h-100">
-                        <a href="../Main/assets/images/product/large-size/2-1-555x645.jpg" class="single-img gallery-popup">
-                            <img class="img-full" src="../Main/assets/images/product/large-size/2-1-555x645.jpg" alt="Product Image">
+                        <a href=@course.Image class="single-img gallery-popup">
+                            <img class="img-full" src=@course.Image alt="Product Image">
                         </a>
                     </div>
                 </div>
@@ -36,16 +38,12 @@
                     <div class="product-thumb-with-content row">
                         <div class="col-12 order-lg-1 order-2 pt-10 pt-lg-0">
                             <div class="single-product-content">
-                                <h2 class="title">HTML</h2>
+                                <h2 class="title">@course.Name</h2>
                                 <div class="price-box pb-1">
-                                    <span class="new-price text-danger">$79.99</span>
+                                    <span class="new-price text-danger">$@course.Price</span>
                                 </div>
                                 <p class="short-desc mb-6">
-                                    Lorem ipsum dolor sit amet, consecte adipisicin elit, sed do
-                                    eiusmod tempor incidi ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                    quis
-                                    nostrud exercita ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                                    irure dolor in reprehenderit in voluptate velit esse cillum dolore.
+                                    @course.Description
                                 </p>
                                 <ul class="quantity-with-btn pb-7">
                                     <li class="add-to-cart">
@@ -56,7 +54,9 @@
                                     <span class="title">Categories :</span>
                                     <ul>
                                         <li>
-                                            <a href="javascript:void(0)">Wed developer</a>
+                                            <a href="javascript:void(0)">
+                                                @course.IdCategoryNavigation.Name
+                                            </a>
                                         </li>
                                     </ul>
                                 </div>
