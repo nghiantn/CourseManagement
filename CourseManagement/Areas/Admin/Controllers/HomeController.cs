@@ -21,11 +21,11 @@ namespace CourseManagement.Areas.Admin.Controllers
             return View();
         }
 
-        //[AllowAnonymous]
-        //[Route("admin.loi", Name = "Error")]
-        //public IActionResult AdminError()
-        //{
-        //    return View();
-        //}
+        [AllowAnonymous]
+        [Route("admin.loi", Name = "Error")]
+        public IActionResult Error()
+        {
+            return View();
+        }
     }
 }

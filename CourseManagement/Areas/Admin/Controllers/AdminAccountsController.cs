@@ -156,6 +156,7 @@ namespace CourseManagement.Areas.Admin.Controllers
                     ViewData["IdRole"] = new SelectList(_context.Roles, "IdRole", "Name");
                     return View();
                 }
+                _notyf.Success("Chỉnh sửa thành công");
                 return RedirectToAction(nameof(Index));
             }
             ViewData["IdRole"] = new SelectList(_context.Roles, "IdRole", "Name", account.IdRole);
@@ -290,7 +291,8 @@ namespace CourseManagement.Areas.Admin.Controllers
 
                     if (kh == null)
                     {
-                        ViewBag.Error = "Thông tin tài khoản đăng nhập chưa chính xác";
+                        ViewBag.Error = "Thông tin đăng nhập chưa chính xác";
+                        _notyf.Warning("Kiểm tra lại tài khoản");
                         return View(model);
                     }
 
@@ -298,13 +300,15 @@ namespace CourseManagement.Areas.Admin.Controllers
 
                     if (pass.Trim() != kh.Password.Trim())
                     {
-                        ViewBag.Error = "Thông tin mật khẩu đăng nhập chưa chính xác";
+                        ViewBag.Error = "Thông tin đăng nhập chưa chính xác";
+                        _notyf.Warning("Kiểm tra lại mật khẩu");
                         return View(model);
                     }
 
                     if (!kh.Active)
                     {
                         ViewBag.Error = "Tài khoản không được phép hoạt động";
+                        _notyf.Error("Tài khoản bị vô hiệu");
                         return View(model);
                     }
 
@@ -339,6 +343,7 @@ namespace CourseManagement.Areas.Admin.Controllers
             return View(model); ;
         }
 
+        [AllowAnonymous]
         [Route("/dang-xuat.html", Name = "Logout")]
         public IActionResult Logout()
         {
@@ -347,14 +352,15 @@ namespace CourseManagement.Areas.Admin.Controllers
 
                 HttpContext.SignOutAsync();
                 HttpContext.Session.Remove("AccountId");
-                //_notyf.Warning("Bạn đã đăng xuất");
+                _notyf.Warning("Bạn đã đăng xuất");
                 return RedirectToAction("Login", "AdminAccounts", new { Area = "Admin" });
             }
             catch
             {
-                //_notyf.Warning("Bạn đã đăng xuất");
+                _notyf.Warning("Bạn đã đăng xuất");
                 return RedirectToAction("Login", "AdminAccounts", new { Area = "Admin" });
             }
         }
     }
 }
+

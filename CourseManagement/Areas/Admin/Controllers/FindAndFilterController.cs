@@ -26,19 +26,25 @@ namespace CourseManagement.Areas.Admin.Controllers
         //////////////////////////////////////////////////////////////
         //////Find And Filter Accounts////////////////////////////////
         //////////////////////////////////////////////////////////////
-
-        [HttpPost]
-        public IActionResult FindAccounts(string keyword, int IdRole)
-        {
-            return View();
-        }
-
         public IActionResult FiltterAccounts(int IdRole = 0)
         {
             var url = $"/Admin/AdminAccounts?IdRole={IdRole}";
             if (IdRole == 0)
             {
                 url = $"/Admin/AdminAccounts";
+            }
+            return Json(new { status = "success", redirectUrl = url });
+        }
+
+        //////////////////////////////////////////////////////////////
+        //////Find And Filter Courses////////////////////////////////
+        //////////////////////////////////////////////////////////////
+        public IActionResult FiltterCourses(int IdCategory = 0)
+        {
+            var url = $"/Admin/AdminCourses?IdCategory={IdCategory}";
+            if (IdCategory == 0)
+            {
+                url = $"/Admin/AdminCourses";
             }
             return Json(new { status = "success", redirectUrl = url });
         }

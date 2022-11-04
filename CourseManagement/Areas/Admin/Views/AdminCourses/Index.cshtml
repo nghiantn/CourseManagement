@@ -1,8 +1,8 @@
 ﻿@using PagedList.Core.Mvc
-@model PagedList.Core.IPagedList<CourseManagement.Models.Account>
+@model PagedList.Core.IPagedList<CourseManagement.Models.Course>
 
 @{
-    ViewData["Title"] = "Quản lý tài khoản";
+    ViewData["Title"] = "Quản lý khóa học";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
@@ -15,7 +15,7 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"> <a asp-area="Admin" asp-controller="Home" asp-action="Index">Trang chủ Admin</a> </li>
                 <li class="breadcrumb-item active">
-                     @ViewData["Title"]
+                    @ViewData["Title"]
                 </li>
             </ol>
         </nav>
@@ -32,23 +32,31 @@
 
                         <!-- Card Title -->
                         <div class="card-title">
-                            <a type="button" class="btn btn-outline-primary" asp-action="Create" asp-area="Admin" asp-controller="AdminAccounts">
-                                <i class="bi bi-person-plus"></i> Tạo mới
-                            </a>
+                             @if (User.IsInRole("Editor") || User.IsInRole("Admin"))
+                            {
+                                <a type="button" class="btn btn-outline-primary" asp-action="Create" asp-area="Admin" asp-controller="AdminCourses">
+                                    <i class="bi bi-person-plus"></i> Tạo mới
+                                </a>
+
+                                <a type="button" class="btn btn-outline-primary" asp-area="Admin" asp-controller="AdminCategories" asp-action="Index">
+                                    <i class="bi bi-stack"></i> Quản lý danh mục
+                                </a>
+                            }
                         </div>
                         <!-- End Card Title -->
                         <!-- Table -->
                         <table class="table">
                             <thead>
                                 <tr class="table-primary text-center">
-                                    <th scope="col">Tài khoản</th>
-                                    <th scope="col">Họ và tên</th>
-                                    <th scope="col">Số điện thoại</th>
+                                    <th scope="col">Khóa học</th>
+                                    <th scope="col">Mô tả</th>
+                                    <th scope="col">Hình ảnh</th>
+                                    <th scope="col">Giá (VND)</th>
                                     <th scope="col">Kích hoạt</th>
 
                                     <th scope="col">
-                                        <select class="form-select text-center" id="textIdRole" name="IdRole" style="min-width: 200px;" asp-items="ViewBag.IdRole" onselect="ViewBag.CurrentIdRole">
-                                            <option value="0">Tất cả quyền</option>
+                                        <select class="form-select text-center" id="textIdCategory" name="IdCategory" style="min-width: 200px;" asp-items="ViewBag.IdCategory" onselect="ViewBag.CurrentIdCategory">
+                                            <option value="0">Tất cả danh mục</option>
                                         </select>
                                     </th>
 
@@ -59,12 +67,16 @@
                                 @foreach (var item in Model)
                                 {
                                     <tr class="text-center">
-                                        <th scope="row">@item.Username</th>
+                                        <th scope="row">@item.Name</th>
                                         <td>
-                                            @item.Fullname
+                                            @item.Description
                                         </td>
                                         <td>
-                                            @item.Phone
+
+                                            <img style="width:100px; height: auto;" src="@item.Image" alt="@item.Name Image">
+                                        </td>
+                                        <td>
+                                            @item.Price VND
                                         </td>
 
                                         @if (@item.Active == true)
@@ -81,20 +93,20 @@
                                         }
 
                                         <td>
-                                            @item.IdRoleNavigation.Name
+                                            @item.IdCategoryNavigation.Name
                                         </td>
                                         <td>
-                                            <div class="btn-group">
-                                                <a type="button" class="btn btn-outline-warning" asp-action="Edit" asp-area="Admin" asp-controller="AdminAccounts" asp-route-id="@item.IdAccount">
-                                                    <i class="bi bi-pencil-square"></i> Chỉnh sửa
-                                                </a>
-                                                <a type="button" class="btn btn-outline-info" asp-action="ChangePassword" asp-area="Admin" asp-controller="AdminAccounts" asp-route-id="@item.IdAccount">
-                                                    <i class="bi bi-gear"></i> Đổi mật khẩu
-                                                </a>
-                                                <a type="button" class="btn btn-outline-danger" asp-action="Delete" asp-area="Admin" asp-controller="AdminAccounts" asp-route-id="@item.IdAccount">
-                                                    <i class="bi bi-eraser-fill"></i> Xóa
-                                                </a>
-                                            </div>
+                                            @if (User.IsInRole("Editor") || User.IsInRole("Admin"))
+                                            {
+                                                <div class="btn-group">
+                                                    <a type="button" class="btn btn-outline-warning" asp-action="Edit" asp-area="Admin" asp-controller="AdminCourses" asp-route-id="@item.IdCourse">
+                                                        <i class="bi bi-pencil-square"></i> Chỉnh sửa
+                                                    </a>
+                                                    <a type="button" class="btn btn-outline-danger" asp-action="Delete" asp-area="Admin" asp-controller="AdminCourses" asp-route-id="@item.IdCourse">
+                                                        <i class="bi bi-eraser-fill"></i> Xóa
+                                                    </a>
+                                                </div>
+                                            }
                                         </td>
                                     </tr>
                                 }
@@ -114,18 +126,18 @@
         <script>
             $(document).ready(function () {
 
-                $("#textIdRole option[value=@ViewBag.CurrentIdRole]").prop('selected', true);
+                $("#textIdCategory option[value=@ViewBag.CurrentIdCategory]").prop('selected', true);
 
-                jQuery("#textIdRole").change(function () {
+                jQuery("#textIdCategory").change(function () {
 
-                    var IdRole = parseInt(jQuery(this).children(":selected").attr("value"));
-                    $("#textIdRole > [value=" + IdRole + "]").attr("selected", true);
+                    var IdCategory = parseInt(jQuery(this).children(":selected").attr("value"));
+                    $("#textIdCategory > [value=" + IdCategory + "]").attr("selected", true);
                     $.ajax({
-                        url: '/Admin/FindAndFilter/FiltterAccounts',
+                        url: '/Admin/FindAndFilter/FiltterCourses',
                         datatype: "json",
                         type: "GET",
                         data: {
-                            IdRole: IdRole
+                            IdCategory: IdCategory
                         },
                         async: true,
                         success: function (results) {
@@ -138,7 +150,6 @@
                         }
                     });
                 });
-
 
             });
         </script>

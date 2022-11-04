@@ -16,8 +16,8 @@ namespace CourseManagement.Models
         public string Password { get; set; }
         public string Fullname { get; set; }
         public string Phone { get; set; }
-        public bool Active { get; set; }
         public int? IdRole { get; set; }
+        public bool Active { get; set; }
 
         public virtual Role IdRoleNavigation { get; set; }
         public virtual ICollection<Class> ClassIdLecturerNavigations { get; set; }

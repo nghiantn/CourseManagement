@@ -34,27 +34,25 @@
 </head>
 <body>
 
-    <!-- ======= Header ======= -->
-    @await Html.PartialAsync("_HeaderPartialView.cshtml")
-    <!-- End Header -->
+    @if (User.Identity.IsAuthenticated)
+    {
+        <!-- ======= Header ======= -->
+        @await Html.PartialAsync("_HeaderPartialView.cshtml")
+        <!-- End Header -->
+        <!-- ======= Sidebar ======= -->
+        @await Html.PartialAsync("_SidebarPartialView.cshtml")
+        <!-- End Sidebar-->
+    }
 
-
-    <!-- ======= Sidebar ======= -->
-    @await Html.PartialAsync("_SidebarPartialView.cshtml")
-    <!-- End Sidebar-->
-
-
-    <!-- ======= #main ======= -->
-    <main id="main" class="main">
-           @RenderBody()
-    </main>
-    <!-- End #main -->
-
-
-    <!-- ======= Footer ======= -->
-    @await Html.PartialAsync("_FooterPartialView.cshtml")
-    <!-- End Footer -->
-
+    <!-- ======= Body ======= -->
+    @RenderBody()
+    <!-- End Body -->
+    @if (User.Identity.IsAuthenticated)
+    {
+        <!-- ======= Footer ======= -->
+        @await Html.PartialAsync("_FooterPartialView.cshtml")
+        <!-- End Footer -->
+    }
 
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 

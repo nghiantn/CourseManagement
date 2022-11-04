@@ -1,4 +1,22 @@
 ﻿@{
     ViewData["Title"] = "Lỗi trang chủ";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
+<main>
+    <div class="container">
+
+        <section class="section error-404 min-vh-100 d-flex flex-column align-items-center justify-content-center">
+
+            <hr/>
+            <hr/>
+
+            <h1 class="card-title text-center align-bottom">404</h1>
+            <p class="text-center align-bottom">Bạn không được cấp phép truy cập vào trang này</p>
+                
+            <a class="btn" href="/"><i class="bi bi-house-fill"></i> Quay về trang chủ</a>
+            <img src="~/Admin/assets/img/not-found.svg" class="img-fluid py-5" alt="Page Not Found">
+
+        </section>
+
+    </div>
+</main><!-- End #main -->

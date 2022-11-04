@@ -1,0 +1,72 @@
+﻿@model CourseManagement.Models.Category
+
+@{
+    ViewData["Title"] = "Tạo mới danh mục";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- ======= #main ======= -->
+<main id="main" class="main">
+    <!-- Page Title -->
+    <div class="pagetitle">
+        <h1>@ViewData["Title"]</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"> <a asp-area="Admin" asp-controller="Home" asp-action="Index">Trang chủ Admin</a> </li>
+                <li class="breadcrumb-item"> <a asp-area="Admin" asp-controller="AdminCategories" asp-action="Index">Quản lý danh mục</a> </li>
+                <li class="breadcrumb-item active">@ViewData["Title"]</li>
+            </ol>
+        </nav>
+    </div>
+    <!-- End Page Title -->
+    <!-- Section -->
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-6">
+
+                <div class="card">
+                    <div class="card-body">
+
+
+                        <!-- Card Title -->
+                        <div class="card-title">
+                        </div>
+                        <!-- End Card Title -->
+                        <!-- Form -->
+                        <form class="row g-3" asp-action="Create">
+
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                            <div class="form-group col-md-12">
+                                <input asp-for="Name" type="text" class="form-control" placeholder="Danh mục" required />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <input asp-for="Description" type="text" class="form-control" placeholder="Mô tả" required>
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                            </div>
+
+                            <div class="btn-group">
+                                <button class="btn btn-outline-primary">
+                                    <i class="bi bi-person-plus"></i> Tạo mới
+                                </button>
+                                <a type="button" class="btn btn-outline-danger" asp-area="Admin" asp-controller="AdminCategories" asp-action="Index">
+                                    <i class="bi bi-x-circle"></i> Hủy
+                                </a>
+                            </div>
+
+                        </form>
+                        <!-- End Form -->
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- End Section -->
+</main>
+<!-- End #main -->
+

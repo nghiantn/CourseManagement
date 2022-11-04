@@ -24,14 +24,14 @@ namespace CourseManagement.Models
         public virtual DbSet<Judge> Judges { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
 
-//        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//        {
-//            if (!optionsBuilder.IsConfigured)
-//            {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-//                optionsBuilder.UseSqlServer("Data Source=LAPTOP-C64GB1SV;Initial Catalog=CourseDatabase;User ID=sa;Password=Nghiakc123");
-//            }
-//        }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+
+                optionsBuilder.UseSqlServer("Data Source=KINNV\\SQLEXPRESS;Initial Catalog=CourseDatabase;Persist Security Info=True;User ID=Vuong;Password=123456");
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -39,19 +39,19 @@ namespace CourseManagement.Models
             {
                 entity.HasKey(e => e.IdAccount);
 
+                entity.ToTable("Accounts", "dbo");
+
                 entity.Property(e => e.IdAccount).HasColumnName("idAccount");
 
-                entity.Property(e => e.Active).HasColumnName("active");
-
                 entity.Property(e => e.Fullname)
-                    .HasMaxLength(50)
+                    .HasMaxLength(255)
                     .IsUnicode(false)
                     .HasColumnName("fullname");
 
                 entity.Property(e => e.IdRole).HasColumnName("idRole");
 
                 entity.Property(e => e.Password)
-                    .HasMaxLength(50)
+                    .HasMaxLength(255)
                     .IsUnicode(false)
                     .HasColumnName("password");
 
@@ -74,6 +74,8 @@ namespace CourseManagement.Models
             modelBuilder.Entity<Calendar>(entity =>
             {
                 entity.HasKey(e => e.IdCalendar);
+
+                entity.ToTable("Calendars", "dbo");
 
                 entity.Property(e => e.IdCalendar).HasColumnName("idCalendar");
 
@@ -104,6 +106,8 @@ namespace CourseManagement.Models
             {
                 entity.HasKey(e => e.IdCategory);
 
+                entity.ToTable("Categories", "dbo");
+
                 entity.Property(e => e.IdCategory).HasColumnName("idCategory");
 
                 entity.Property(e => e.Description)
@@ -119,6 +123,8 @@ namespace CourseManagement.Models
             modelBuilder.Entity<Class>(entity =>
             {
                 entity.HasKey(e => e.IdClass);
+
+                entity.ToTable("Classes", "dbo");
 
                 entity.Property(e => e.IdClass).HasColumnName("idClass");
 
@@ -148,6 +154,8 @@ namespace CourseManagement.Models
             {
                 entity.HasKey(e => e.IdCourse);
 
+                entity.ToTable("Courses", "dbo");
+
                 entity.Property(e => e.IdCourse).HasColumnName("idCourse");
 
                 entity.Property(e => e.Description)
@@ -170,12 +178,15 @@ namespace CourseManagement.Models
                 entity.HasOne(d => d.IdCategoryNavigation)
                     .WithMany(p => p.Courses)
                     .HasForeignKey(d => d.IdCategory)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Courses_Categories");
             });
 
             modelBuilder.Entity<Judge>(entity =>
             {
                 entity.HasKey(e => e.IdJudge);
+
+                entity.ToTable("Judges", "dbo");
 
                 entity.Property(e => e.IdJudge).HasColumnName("idJudge");
 
@@ -194,6 +205,8 @@ namespace CourseManagement.Models
             modelBuilder.Entity<Role>(entity =>
             {
                 entity.HasKey(e => e.IdRole);
+
+                entity.ToTable("Roles", "dbo");
 
                 entity.Property(e => e.IdRole).HasColumnName("idRole");
 

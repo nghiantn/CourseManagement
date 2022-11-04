@@ -42,11 +42,11 @@ namespace CourseManagement
                 .AddCookie(p =>
                 {
                     p.Cookie.Name = "UserLoginCookie";
-                    p.ExpireTimeSpan = TimeSpan.FromSeconds(30);
+                    p.ExpireTimeSpan = TimeSpan.FromHours(6);
                     p.LoginPath = "/dang-nhap.html";
                     p.LogoutPath = "/dang-xuat.html";
-                    //p.AccessDeniedPath = "/admin.loi";
-                    p.AccessDeniedPath = "/admin.khoahoc";
+                    p.AccessDeniedPath = "/admin.loi";
+                    //p.AccessDeniedPath = "/admin.khoahoc";
                 });
 
             services.AddNotyf(config =>
@@ -54,6 +54,7 @@ namespace CourseManagement
                 config.DurationInSeconds = 3;
                 config.IsDismissable = true;
                 config.Position = NotyfPosition.TopCenter;
+                config.HasRippleEffect = true;
             });
 
             services.AddControllersWithViews();

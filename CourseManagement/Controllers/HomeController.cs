@@ -30,7 +30,6 @@ namespace CourseManagement.Controllers
             //_notyf.Custom("Custom Notification - closes in 10 seconds.", 10, "#B600FF", "fa fa-home");
             var courseDatabaseContext = _context.Courses.Include(c => c.IdCategoryNavigation);
             ViewBag.course = courseDatabaseContext;
-
             return View();
         }
 
