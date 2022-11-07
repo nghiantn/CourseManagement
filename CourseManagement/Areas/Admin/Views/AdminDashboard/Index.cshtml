@@ -1,0 +1,199 @@
+﻿@model CourseManagement.Models.Account
+
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<main id="main" class="main">
+
+    <section class="section profile">
+        <div class="row">
+            <div class="col-xl-4">
+
+                <div class="card">
+                    <div class="card-body profile-card pt-4 d-flex flex-column align-items-center"> 
+                        <h2>@Model.Fullname</h2>
+                        <h3>@Model.IdRoleNavigation.Name</h3>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-xl-8">
+
+                <div class="card">
+                    <div class="card-body pt-3">
+                        <!-- Bordered Tabs -->
+                        <ul class="nav nav-tabs nav-tabs-bordered">
+
+                            <li class="nav-item">
+                                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Thông tin chung</button>
+                            </li>
+
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit" disabled>Chỉnh sửa thông tin cá nhân</button>
+                            </li>
+
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password" disabled>Thay đổi mật khẩu</button>
+                            </li>
+
+                        </ul>
+                        <div class="tab-content pt-2">
+
+                            <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                                
+                                <h5 class="card-title">ID Account: #@Model.IdAccount</h5>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label ">Tài khoản</div>
+                                    <div class="col-lg-9 col-md-8">@Model.Username</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Mật khẩu</div>
+                                    <div class="col-lg-9 col-md-8">@ViewBag.Pass</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Họ và tên</div>
+                                    <div class="col-lg-9 col-md-8">@Model.Fullname</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Quyền truy cập</div>
+                                    <div class="col-lg-9 col-md-8">@Model.IdRoleNavigation.Name</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Số điện thoại</div>
+                                    <div class="col-lg-9 col-md-8">@Model.Phone</div>
+                                </div>
+
+                            </div>
+
+                            <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+
+                                <!-- Form -->
+                                <form class="row g-3" asp-action="Edit">
+
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                                    <div class="form-group col-md-12">
+                                        <input asp-for="Username" type="text" class="form-control" placeholder="Tài khoản" required />
+                                        <span asp-validation-for="Username" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group col-md-12">
+                                        <input asp-for="Password" type="text" class="form-control text-danger" placeholder="Mật khẩu" readonly />
+                                        <span asp-validation-for="Password" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group col-md-12">
+                                        <input asp-for="Fullname" type="text" class="form-control" placeholder="Họ và tên" required />
+                                        <span asp-validation-for="Fullname" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group col-md-12">
+                                        <input asp-for="Phone" type="number" class="form-control" placeholder="Số điện thoại" required />
+                                        <span asp-validation-for="Phone" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <select class="form-select" asp-for="IdRole" asp-items="ViewBag.IdRole" required>
+                                            <option value="0" disabled selected>Quyền truy cập</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group col-12">
+                                        <div class="form-check form-switch">
+                                            <input asp-for="Active" class="form-check-input" type="checkbox" id="gridCheck" />
+                                            <span asp-validation-for="Active" class="text-danger"></span>
+                                            <label class="form-check-label" for="gridCheck">
+                                                Kích hoạt
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="btn-group">
+                                        <input type="hidden" asp-for="IdAccount" />
+                                        <button class="btn btn-outline-warning">
+                                            <i class="bi bi-save"></i> Lưu
+                                        </button>
+                                        <a type="button" class="btn btn-outline-danger" asp-area="Admin" asp-controller="AdminDashboard" asp-action="Index">
+                                            <i class="bi bi-x-circle"></i> Hủy
+                                        </a>
+                                    </div>
+                                </form>
+                                <!-- End Form -->
+
+                            </div>
+
+                            <div class="tab-pane fade pt-3" id="profile-change-password">
+                                <!-- Form -->
+                                <form class="row g-3" asp-action="ChangePassword">
+
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                                    <div class="form-group col-md-12">
+                                        <input asp-for="Username" type="text" class="form-control" placeholder="Tài khoản" readonly />
+                                        <span asp-validation-for="Username" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group col-md-12">
+                                        <input asp-for="Password" type="password" class="form-control" placeholder="Mật khẩu mới" />
+                                        <span asp-validation-for="Password" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group col-md-12">
+                                        <input asp-for="Fullname" type="text" class="form-control" placeholder="Họ và tên" readonly />
+                                        <span asp-validation-for="Fullname" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group col-md-12">
+                                        <input asp-for="Phone" type="number" class="form-control" placeholder="Số điện thoại" readonly />
+                                        <span asp-validation-for="Phone" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <select class="form-select" asp-for="IdRole" asp-items="ViewBag.IdRole" required readonly>
+                                            <option value="0" readonly selected>Quyền truy cập</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group col-12">
+                                        <div class="form-check form-switch">
+                                            <input asp-for="Active" class="form-check-input" type="checkbox" id="gridCheck" readonly />
+                                            <span asp-validation-for="Active" class="text-danger"></span>
+                                            <label class="form-check-label" for="gridCheck">
+                                                Kích hoạt
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="btn-group">
+                                        <input type="hidden" asp-for="IdAccount" />
+                                        <button class="btn btn-outline-info">
+                                            <i class="bi bi-gear"></i> Đổi mật khẩu
+                                        </button>
+                                        <a type="button" class="btn btn-outline-danger" asp-area="Admin" asp-controller="AdminDashboard" asp-action="Index">
+                                            <i class="bi bi-x-circle"></i> Hủy
+                                        </a>
+                                    </div>
+
+                                </form>
+                                <!-- End Form -->
+                            </div>
+
+                        </div><!-- End Bordered Tabs -->
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+</main><!-- End #main -->

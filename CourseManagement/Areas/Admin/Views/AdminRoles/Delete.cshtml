@@ -1,0 +1,72 @@
+﻿@model CourseManagement.Models.Role
+
+@{
+    ViewData["Title"] = "Xác nhận xóa quyền truy cập";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- ======= #main ======= -->
+<main id="main" class="main">
+    <!-- Page Title -->
+    <div class="pagetitle">
+        <h1>@ViewData["Title"]</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"> <a asp-area="Admin" asp-controller="Home" asp-action="Index">Trang chủ Admin</a> </li>
+                <li class="breadcrumb-item"> <a asp-area="Admin" asp-controller="AdminRoles" asp-action="Index">Quản lý quyền truy cập</a> </li>
+                <li class="breadcrumb-item active">@ViewData["Title"]</li>
+            </ol>
+        </nav>
+    </div>
+    <!-- End Page Title -->
+    <!-- Section -->
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-6">
+
+                <div class="card">
+                    <div class="card-body">
+
+
+                        <!-- Card Title -->
+                        <div class="card-title">
+                        </div>
+                        <!-- End Card Title -->
+                        <!-- Table -->
+                        <table class="table">
+                            <tbody>
+                                <tr class="text-center">
+                                    <th scope="col">Danh mục</th>
+                                    <th scope="row">@Model.Name</th>
+                                </tr>
+
+                                <tr class="text-center">
+                                    <th scope="col">Mô tả</th>
+                                    <td>
+                                        @Model.Description
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!-- End Table -->
+
+
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <form asp-action="Delete">
+                        <input type="hidden" asp-for="IdRole" />
+                        <button class="btn btn-outline-danger">
+                            <i class="bi bi-eraser-fill"></i> Xóa
+                        </button>
+                        <a type="button" class="btn btn-outline-primary" asp-area="Admin" asp-controller="AdminRoles" asp-action="Index">
+                            <i class="bi bi-reply-fill"></i> Trở về
+                        </a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Section -->
+</main>
+<!-- End #main -->

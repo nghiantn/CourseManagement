@@ -1,0 +1,38 @@
+﻿@model CourseManagement.Models.Class
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>Class</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="IdLecturer" class="control-label"></label>
+                <select asp-for="IdLecturer" class ="form-control" asp-items="ViewBag.IdLecturer"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdStudent" class="control-label"></label>
+                <select asp-for="IdStudent" class ="form-control" asp-items="ViewBag.IdStudent"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdCalendar" class="control-label"></label>
+                <select asp-for="IdCalendar" class ="form-control" asp-items="ViewBag.IdCalendar"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

@@ -1,0 +1,87 @@
+﻿@model CourseManagement.Models.Calendar
+
+@{
+    ViewData["Title"] = "Chỉnh sửa lịch học";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}}
+
+<!-- ======= #main ======= -->
+<main id="main" class="main">
+    <!-- Page Title -->
+    <div class="pagetitle">
+        <h1>@ViewData["Title"]</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"> <a asp-area="Admin" asp-controller="Home" asp-action="Index">Trang chủ Admin</a> </li>
+                <li class="breadcrumb-item"> <a asp-area="Admin" asp-controller="AdminCalendars" asp-action="Index">Quản lý lịch học</a> </li>
+                <li class="breadcrumb-item active">@ViewData["Title"]</li>
+            </ol>
+        </nav>
+    </div>
+    <!-- End Page Title -->
+    <!-- Section -->
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-6">
+
+                <div class="card">
+                    <div class="card-body">
+
+
+                        <!-- Card Title -->
+                        <div class="card-title">
+                        </div>
+                        <!-- End Card Title -->
+                        <!-- Form -->
+                        <form class="row g-3" asp-action="Edit" enctype="multipart/form-data">
+
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                            <div class="form-group col-md-12">
+                                <input asp-for="Name" type="text" class="form-control" placeholder="Tên lịch học" required />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <label for="StartTime">Ngày bắt đầu</label>
+                                <input id="StartTime" name="StartTime" asp-for="StartTime" type="date" class="form-control" required/>
+                                <span asp-validation-for="StartTime" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <label for="EndTime">Ngày kết thúc</label>
+                                <input id="EndTime" name="EndTime" asp-for="EndTime" type="date" class="form-control" required/>
+                                <span asp-validation-for="EndTime" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <input asp-for="Length" type="number" class="form-control" placeholder="Độ dài khóa học" hidden />
+                                <span asp-validation-for="Length" class="text-danger"></span>
+
+                                <select class="form-select" asp-for="IdCourse" asp-items="ViewBag.IdCourse" required>
+                                    <option value="0" disabled selected>Khóa học</option>
+                                </select>
+                            </div>
+
+                            <div class="btn-group">
+                                <input type="hidden" asp-for="IdCalendar" />
+                                <button class="btn btn-outline-warning">
+                                    <i class="bi bi-save"></i> Lưu
+                                </button>
+                                <a type="button" class="btn btn-outline-danger" asp-area="Admin" asp-controller="AdminCalendars" asp-action="Index">
+                                    <i class="bi bi-x-circle"></i> Hủy
+                                </a>
+                            </div>
+                        </form>
+                        <!-- End Form -->
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- End Section -->
+</main>
+<!-- End #main -->

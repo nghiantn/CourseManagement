@@ -4,6 +4,13 @@
 @{
     ViewData["Title"] = "Quản lý tài khoản";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    int PageCurrent = ViewBag.CurrentPage;
+    int PageLength = ViewBag.PageLength;
+    int PageBack = PageCurrent - 1;
+    int PageNext = PageCurrent + 1;
+    int PageRole = ViewBag.CurrentIdRole;
+    int PageNextPlus = PageNext + 1;
+    int PageNextMinus = PageBack - 1;
 }
 
 <!-- ======= #main ======= -->
@@ -15,7 +22,7 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"> <a asp-area="Admin" asp-controller="Home" asp-action="Index">Trang chủ Admin</a> </li>
                 <li class="breadcrumb-item active">
-                     @ViewData["Title"]
+                    @ViewData["Title"]
                 </li>
             </ol>
         </nav>
@@ -34,6 +41,9 @@
                         <div class="card-title">
                             <a type="button" class="btn btn-outline-primary" asp-action="Create" asp-area="Admin" asp-controller="AdminAccounts">
                                 <i class="bi bi-person-plus"></i> Tạo mới
+                            </a>
+                            <a type="button" class="btn btn-outline-primary" asp-area="Admin" asp-controller="AdminRoles" asp-action="Index">
+                                <i class="bi bi-diagram-3"></i> Quản lý quyền truy cập
                             </a>
                         </div>
                         <!-- End Card Title -->
@@ -110,14 +120,65 @@
         </div>
     </section>
     <!-- End Section -->
+    <!-- Pagination -->
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            @if (PageCurrent > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="?IdRole=@PageRole&Page=1" aria-label="Previous">
+                        <span class="fa fa-chevron-left"></span>
+                    </a>
+                </li>
+                if (PageNextMinus >= 1)
+                {
+                    <li class="page-item"><a class="page-link" href="?IdRole=@PageRole&Page=@PageNextMinus">@PageNextMinus</a></li>
+                }
+                <li class="page-item"><a class="page-link" href="?IdRole=@PageRole&Page=@PageBack">@PageBack</a></li>
+            }
+            else
+            {
+                <li class="page-item disabled">
+                    <a class="page-link" href="?IdRole=@PageRole&Page=1" aria-label="Previous">
+                        <span class="fa fa-chevron-left"></span>
+                    </a>
+                </li>
+            }
+
+            <li class="page-item active"><a class="page-link" href="?IdRole=@PageRole&Page=@PageCurrent">@PageCurrent</a></li>
+
+            @if (PageCurrent < PageLength)
+            {
+                <li class="page-item"><a class="page-link" href="?IdRole=@PageRole&Page=@PageNext">@PageNext</a></li>
+                if (PageNextPlus <= PageLength)
+                {
+                    <li class="page-item"><a class="page-link" href="?IdRole=@PageRole&Page=@PageNextPlus">@PageNextPlus</a></li>
+                }
+                <li class="page-item">
+                    <a class="page-link" href="?IdRole=@PageRole&Page=@PageLength" aria-label="Next">
+                        <span class="fa fa-chevron-right"></span>
+                    </a>
+                </li>
+            }
+            else
+            {
+                <li class="page-item disabled">
+                    <a class="page-link" href="?IdRole=@PageRole&Page=1" aria-label="Next">
+                        <span class="fa fa-chevron-right"></span>
+                    </a>
+                </li>
+            }
+
+        </ul>
+    </nav>
+    <!-- End Pagination -->
     @section Scripts{
         <script>
             $(document).ready(function () {
 
-                $("#textIdRole option[value=@ViewBag.CurrentIdRole]").prop('selected', true);
+                $("#textIdRole option[value=@PageRole]").prop('selected', true);
 
                 jQuery("#textIdRole").change(function () {
-
                     var IdRole = parseInt(jQuery(this).children(":selected").attr("value"));
                     $("#textIdRole > [value=" + IdRole + "]").attr("selected", true);
                     $.ajax({

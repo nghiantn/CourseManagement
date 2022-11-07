@@ -12,8 +12,8 @@ namespace CourseManagement.Models
 
         public int IdCalendar { get; set; }
         public string Name { get; set; }
-        public DateTime? StartTime { get; set; }
-        public DateTime? EndTime { get; set; }
+        public DateTime StartTime { get; set; }
+        public DateTime EndTime { get; set; }
         public int? Length { get; set; }
         public int? IdCourse { get; set; }
 

@@ -2,49 +2,67 @@
 
     <ul class="sidebar-nav" id="sidebar-nav">
 
+        <li class="nav-heading">@User.Identity.Name</li>
+
         <li class="nav-item">
-            <a class="nav-link collapsed" asp-area="Admin" asp-controller="Home" asp-action="Index">
-                <i class="bi bi-grid"></i>
-                <span>Dashboard</span>
+            <a class="nav-link collapsed" asp-area="Admin" asp-controller="AdminDashboard" asp-action="Index">
+                <i class="bi bi-person-badge"></i>
+                <span>Thông tin cá nhân</span>
             </a>
         </li>
-        <li class="nav-heading">Trang chủ</li>
-        <li class="nav-item">
-            <a class="nav-link collapsed" asp-area="Admin" asp-controller="AdminCourses" asp-action="Index">
-                <i class="bi bi-book-half"></i>
-                <span>Quản lý khóa học</span>
-            </a>
-        </li>
+
+        <li class="nav-heading">Courses Management</li>
+        @if (User.IsInRole("Admin") || User.IsInRole("Editor"))
+        {
+            <li class="nav-item">
+                <a class="nav-link collapsed" asp-area="Admin" asp-controller="AdminCourses" asp-action="Index">
+                    <i class="bi bi-book-half"></i>
+                    <span>Quản lý khóa học</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" asp-area="Admin" asp-controller="AdminCalendars" asp-action="Index">
+                    <i class="bi bi-calendar-week"></i>
+                    <span>Quản lý lịch học</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" asp-area="Admin" asp-controller="AdminClasses" asp-action="Index">
+                    <i class="bi bi-journal-text"></i>
+                    <span>Quản lý lớp học</span>
+                </a>
+            </li>
+            
+        }
+
         @if (User.IsInRole("Admin"))
         {
             <li class="nav-heading">Database</li>
 
             <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#databases-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-menu-button-wide"></i><span>Database</span><i class="bi bi-chevron-down ms-auto"></i>
+                <a class="nav-link collapsed" asp-area="Admin" asp-controller="AdminAccounts" asp-action="Index">
+                    <i class="bi bi-person-square"></i>
+                    <span>Quản lý tài khoản</span>
                 </a>
-                <ul id="databases-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+            </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" asp-area="Admin" asp-controller="AdminAccounts" asp-action="Index">
-                            <i class="bi bi-person-square"></i>
-                            <span>Quản lý tài khoản</span>
-                        </a>
-                    </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" asp-area="Admin" asp-controller="AdminCategories" asp-action="Index">
+                    <i class="bi bi-stack"></i>
+                    <span>Quản lý danh mục</span>
+                </a>
+            </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" asp-area="Admin" asp-controller="AdminCategories" asp-action="Index">
-                            <i class="bi bi-stack"></i>
-                            <span>Quản lý danh mục</span>
-                        </a>
-                    </li>
-
-                </ul>
+            <li class="nav-item">
+                <a class="nav-link collapsed" asp-area="Admin" asp-controller="AdminRoles" asp-action="Index">
+                    <i class="bi bi-diagram-3"></i>
+                    <span>Quản lý quyền truy cập</span>
+                </a>
             </li>
         }
         <!-- End Databases Nav -->
-
-
 
 
     </ul>

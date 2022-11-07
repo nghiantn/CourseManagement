@@ -39,7 +39,7 @@ namespace CourseManagement.Areas.Admin.Controllers
         }
 
        
-        public IActionResult Index(int page = 1, int IdRole = 0)
+        public IActionResult Index(int IdRole = 0, int page = 1)
         {
             var pageNumber = page;
             var pageSize = 10;
@@ -65,6 +65,7 @@ namespace CourseManagement.Areas.Admin.Controllers
             PagedList<Account> models = new PagedList<Account>(lsAccounts.AsQueryable(), pageNumber, pageSize);
 
             ViewBag.CurrentPage = pageNumber;
+            ViewBag.PageLength = (int)Math.Ceiling((Double)lsAccounts.Count / (Double)pageSize);
             ViewBag.CurrentIdRole = IdRole;
             ViewData["IdRole"] = new SelectList(_context.Roles, "IdRole", "Name");
             return View(models);
@@ -272,7 +273,7 @@ namespace CourseManagement.Areas.Admin.Controllers
         public IActionResult Login(string returnUrl = null)
         {
             var khID = HttpContext.Session.GetString("IdAccount");
-            if (khID != null) return RedirectToAction("Index", "Home", new { Area = "Admin" });
+            if (khID != null) return RedirectToAction("Index", "AdminDashboard", new { Area = "Admin" });
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -317,7 +318,7 @@ namespace CourseManagement.Areas.Admin.Controllers
 
                     var khID = HttpContext.Session.GetString("IdAccount");
 
-                    HttpContext.Session.SetString("AccountId", kh.IdAccount.ToString());
+                    HttpContext.Session.SetString("IdAccount", kh.IdAccount.ToString());
 
                     var userClaims = new List<Claim>
                     {
@@ -331,7 +332,7 @@ namespace CourseManagement.Areas.Admin.Controllers
                     await HttpContext.SignInAsync(userPrincipal);
 
                     _notyf.Success("Đăng nhập thành công");
-                    return RedirectToAction("Index", "Home", new { Area = "Admin" });
+                    return RedirectToAction("Index", "AdminDashboard", new { Area = "Admin" });
                 }
             }
             catch
@@ -349,9 +350,8 @@ namespace CourseManagement.Areas.Admin.Controllers
         {
             try
             {
-
                 HttpContext.SignOutAsync();
-                HttpContext.Session.Remove("AccountId");
+                HttpContext.Session.Remove("IdAccount");
                 _notyf.Warning("Bạn đã đăng xuất");
                 return RedirectToAction("Login", "AdminAccounts", new { Area = "Admin" });
             }

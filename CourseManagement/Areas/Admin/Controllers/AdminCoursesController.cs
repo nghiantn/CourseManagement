@@ -10,6 +10,11 @@ using Microsoft.AspNetCore.Authorization;
 using System.Data;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using PagedList.Core;
+using System.IO;
+using CourseManagement.Helpper;
+using Microsoft.AspNetCore.Hosting;
+
+
 
 namespace CourseManagement.Areas.Admin.Controllers
 {
@@ -24,6 +29,15 @@ namespace CourseManagement.Areas.Admin.Controllers
         {
             _context = context;
             _notyf = notyf;
+        }
+
+        private string GetUniqueFileName(string fileName)
+        {
+            fileName = Path.GetFileName(fileName);
+            return Path.GetFileNameWithoutExtension(fileName)
+                      + "_"
+                      + Guid.NewGuid().ToString().Substring(0, 4)
+                      + Path.GetExtension(fileName);
         }
 
         public IActionResult Index(int page = 1, int IdCategory = 0)
@@ -52,6 +66,7 @@ namespace CourseManagement.Areas.Admin.Controllers
             PagedList<Course> models = new PagedList<Course>(lsCourses.AsQueryable(), pageNumber, pageSize);
 
             ViewBag.CurrentPage = pageNumber;
+            ViewBag.PageLength = (int)Math.Ceiling((Double)lsCourses.Count / (Double)pageSize);
             ViewBag.CurrentIdCategory = IdCategory;
             ViewData["IdCategory"] = new SelectList(_context.Categories, "IdCategory", "Name");
             return View(models);
@@ -60,6 +75,7 @@ namespace CourseManagement.Areas.Admin.Controllers
         public IActionResult Create()
         {
             ViewData["IdCategory"] = new SelectList(_context.Categories, "IdCategory", "Name");
+            _notyf.Information("Đang thêm mới");
             return View();
         }
 
@@ -68,15 +84,23 @@ namespace CourseManagement.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdCourse,Name,Description,IdCategory,Image,Price,Active")] Course course)
+        public async Task<IActionResult> Create([Bind("IdCourse,Name,Description,IdCategory,Image,Price,Active")] Course course, Microsoft.AspNetCore.Http.IFormFile fThumb)
         {
             if (ModelState.IsValid)
             {
+                 if (fThumb != null)
+                    {
+                        string extension = Path.GetExtension(fThumb.FileName);
+                        string image = Utilities.SEOUrl(course.Name) + extension;
+                        course.Image = await Utilities.UploadFile(fThumb, @"Courses", image.ToLower());
+                    }
+                    if (string.IsNullOrEmpty(course.Image)) course.Image = "default.jpg";
                 _context.Add(course);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             ViewData["IdCategory"] = new SelectList(_context.Categories, "IdCategory", "Name", course.IdCategory);
+            _notyf.Success("Tạo mới thành công");
             return View(course);
         }
 
@@ -93,6 +117,7 @@ namespace CourseManagement.Areas.Admin.Controllers
             {
                 return NotFound();
             }
+            _notyf.Warning("Đang chỉnh sửa");
             ViewData["IdCategory"] = new SelectList(_context.Categories, "IdCategory", "Name", course.IdCategory);
             return View(course);
         }
@@ -102,7 +127,7 @@ namespace CourseManagement.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdCourse,Name,Description,IdCategory,Image,Price,Active")] Course course)
+        public async Task<IActionResult> Edit(int id, [Bind("IdCourse,Name,Description,IdCategory,Image,Price,Active")] Course course, Microsoft.AspNetCore.Http.IFormFile fThumb)
         {
             if (id != course.IdCourse)
             {
@@ -113,6 +138,15 @@ namespace CourseManagement.Areas.Admin.Controllers
             {
                 try
                 {
+                    if (fThumb != null)
+                    {
+                        string extension = Path.GetExtension(fThumb.FileName);
+                        string image = Utilities.SEOUrl(course.Name) + extension;
+                        course.Image = await Utilities.UploadFile(fThumb, @"Courses", image.ToLower());
+                    }
+
+                    if (string.IsNullOrEmpty(course.Image)) course.Image = "default.jpg";
+
                     _context.Update(course);
                     await _context.SaveChangesAsync();
                 }
@@ -127,6 +161,7 @@ namespace CourseManagement.Areas.Admin.Controllers
                         throw;
                     }
                 }
+                _notyf.Success("Chỉnh sửa thành công");
                 return RedirectToAction(nameof(Index));
             }
             ViewData["IdCategory"] = new SelectList(_context.Categories, "IdCategory", "Name", course.IdCategory);
@@ -148,7 +183,7 @@ namespace CourseManagement.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-
+            _notyf.Error("Xác nhận xóa");
             return View(course);
         }
 
@@ -168,6 +203,7 @@ namespace CourseManagement.Areas.Admin.Controllers
             }
             
             await _context.SaveChangesAsync();
+            _notyf.Success("Xóa thành công");
             return RedirectToAction(nameof(Index));
         }
 

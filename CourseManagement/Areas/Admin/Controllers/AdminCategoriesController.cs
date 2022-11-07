@@ -43,6 +43,7 @@ namespace CourseManagement.Areas.Admin.Controllers
             PagedList<Category> models = new PagedList<Category>(lsCategories.AsQueryable(), pageNumber, pageSize);
 
             ViewBag.CurrentPage = pageNumber;
+            ViewBag.PageLength = (int)Math.Ceiling((Double)lsCategories.Count / (Double)pageSize);
 
             return View(models);
         }
