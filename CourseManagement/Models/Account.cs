@@ -7,8 +7,8 @@ namespace CourseManagement.Models
     {
         public Account()
         {
-            ClassIdLecturerNavigations = new HashSet<Class>();
-            ClassIdStudentNavigations = new HashSet<Class>();
+            Calendars = new HashSet<Calendar>();
+            Learns = new HashSet<Learn>();
         }
 
         public int IdAccount { get; set; }
@@ -20,7 +20,7 @@ namespace CourseManagement.Models
         public bool Active { get; set; }
 
         public virtual Role IdRoleNavigation { get; set; }
-        public virtual ICollection<Class> ClassIdLecturerNavigations { get; set; }
-        public virtual ICollection<Class> ClassIdStudentNavigations { get; set; }
+        public virtual ICollection<Calendar> Calendars { get; set; }
+        public virtual ICollection<Learn> Learns { get; set; }
     }
 }

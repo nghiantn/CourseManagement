@@ -1,8 +1,8 @@
 ﻿@using PagedList.Core.Mvc
-@model PagedList.Core.IPagedList<CourseManagement.Models.Role>
+@model PagedList.Core.IPagedList<CourseManagement.Models.Learn>
 
 @{
-    ViewData["Title"] = "Quản lý quyền truy cập";
+    ViewData["Title"] = "Quản lý lớp học #" + @ViewBag.CurrentId;
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
     int PageCurrent = ViewBag.CurrentPage;
     int PageLength = ViewBag.PageLength;
@@ -20,6 +20,7 @@
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"> <a asp-area="Admin" asp-controller="Home" asp-action="Index">Trang chủ Admin</a> </li>
+                <li class="breadcrumb-item"> <a asp-area="Admin" asp-controller="AdminCalendars" asp-action="Index">Quản lý lịch học</a> </li>
                 <li class="breadcrumb-item active">
                     @ViewData["Title"]
                 </li>
@@ -38,13 +39,12 @@
 
                         <!-- Card Title -->
                         <div class="card-title">
-
-                            <a type="button" class="btn btn-outline-primary" asp-action="Create" asp-area="Admin" asp-controller="AdminRoles">
+                            <a type="button" class="btn btn-outline-primary" asp-action="Create" asp-area="Admin" asp-controller="AdminCategories">
                                 <i class="bi bi-person-plus"></i> Tạo mới
                             </a>
 
-                            <a type="button" class="btn btn-outline-primary" asp-area="Admin" asp-controller="AdminAccounts" asp-action="Index">
-                                <i class="bi bi-person-square"></i> Quản lý tài khoản
+                            <a type="button" class="btn btn-outline-primary" asp-area="Admin" asp-controller="AdminCourses" asp-action="Index">
+                                <i class="bi bi-book-half"></i> Quản lý khóa học
                             </a>
                         </div>
                         <!-- End Card Title -->
@@ -52,43 +52,43 @@
                         <table class="table">
                             <thead>
                                 <tr class="table-info text-center">
-                                    <th scope="col">Quyền truy cập</th>
-                                    <th scope="col">Mô tả</th>
-
+                                    <th scope="col">Họ và tên học viên</th>
                                     <th scope="col">Thêm</th>
                                 </tr>
                             </thead>
                             <tbody>
+
+                                @Html.Hidden("item-to-delete", "", new {@id = "item-to-delete"})
+
                                 @foreach (var item in Model)
                                 {
+
+
                                     <tr class="text-center">
+
                                         <th scope="row">
-                                            <a href="/Admin/AdminAccounts?IdRole=@item.IdRole&Page=1">
-                                                @item.Name
+                                            <a href="#" class="card-link">
+                                                @item.IdStudentNavigation.Fullname
                                             </a>
                                         </th>
-                                        <td>
-                                            @item.Description
-                                        </td>
 
                                         <td>
                                             <div class="btn-group">
 
-                                                <a type="button" class="btn btn-outline-warning" asp-action="Edit" asp-area="Admin" asp-controller="AdminRoles" asp-route-id="@item.IdRole">
-                                                    <i class="bi bi-pencil-square"></i> Chỉnh sửa
-                                                </a>
 
-                                                <a type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#_Delete_@item.IdRole" asp-route-id="@item.IdRole">
+
+                                                <a type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#_Delete_@item.IdLearn" asp-route-id="@item.IdLearn">
                                                     <i class="bi bi-eraser-fill"></i> Xóa
                                                 </a>
 
                                             </div>
+
                                             <!-- Modal Delete -->
-                                            <div class="modal fade" id="_Delete_@item.IdRole" tabindex="-1">
+                                            <div class="modal fade" id="_Delete_@item.IdLearn" tabindex="-1">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title">Bạn chắc chắn muốn xóa #@item.IdRole</h5>
+                                                            <h5 class="modal-title">Bạn chắc chắn muốn xóa #@item.IdLearn</h5>
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
@@ -97,14 +97,7 @@
                                                                 <tbody>
                                                                     <tr class="text-center">
                                                                         <th scope="col">Danh mục</th>
-                                                                        <th scope="row">@item.Name</th>
-                                                                    </tr>
-
-                                                                    <tr class="text-center">
-                                                                        <th scope="col">Mô tả</th>
-                                                                        <td>
-                                                                            @item.Description
-                                                                        </td>
+                                                                        <th scope="row">@item.IdStudentNavigation.Fullname</th>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
@@ -112,7 +105,7 @@
                                                         </div>
                                                         <div class="modal-footer">
 
-                                                            <form asp-action="Delete" asp-area="Admin" asp-controller="AdminRoles" asp-route-id="@item.IdRole">
+                                                            <form asp-action="Delete" asp-area="Admin" asp-controller="AdminCategories" asp-route-id="@item.IdLearn">
                                                                 <button class="btn btn-outline-danger">
                                                                     <i class="bi bi-eraser-fill"></i> Xóa
                                                                 </button>
@@ -129,18 +122,19 @@
                                             <!-- End Modal Delete-->
 
                                         </td>
+
+
+
                                     </tr>
                                 }
                             </tbody>
                         </table>
                         <!-- End Table -->
 
-
                     </div>
-                </div>
 
+                </div>
             </div>
-        </div>
     </section>
     <!-- End Section -->
     <!-- Pagination -->
@@ -173,7 +167,6 @@
             @if (PageCurrent < PageLength)
             {
                 <li class="page-item"><a class="page-link" href="?Page=@PageNext">@PageNext</a></li>
-
                 if (PageNextPlus <= PageLength)
                 {
                     <li class="page-item"><a class="page-link" href="?Page=@PageNextPlus">@PageNextPlus</a></li>
@@ -196,5 +189,6 @@
         </ul>
     </nav>
     <!-- End Pagination -->
+
 </main>
 <!-- End #main -->

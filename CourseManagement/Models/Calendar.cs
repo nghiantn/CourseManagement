@@ -7,7 +7,7 @@ namespace CourseManagement.Models
     {
         public Calendar()
         {
-            Classes = new HashSet<Class>();
+            Learns = new HashSet<Learn>();
         }
 
         public int IdCalendar { get; set; }
@@ -15,9 +15,14 @@ namespace CourseManagement.Models
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public int? Length { get; set; }
-        public int? IdCourse { get; set; }
+        public int IdCourse { get; set; }
+        public int IdTeacher { get; set; }
+        public int Slotnow { get; set; }
+        public int Slotmax { get; set; }
+        public bool Active { get; set; }
 
         public virtual Course IdCourseNavigation { get; set; }
-        public virtual ICollection<Class> Classes { get; set; }
+        public virtual Account IdTeacherNavigation { get; set; }
+        public virtual ICollection<Learn> Learns { get; set; }
     }
 }

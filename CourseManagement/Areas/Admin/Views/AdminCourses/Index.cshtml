@@ -40,17 +40,17 @@
                         <!-- Card Title -->
                         <div class="card-title">
 
-                                <a type="button" class="btn btn-outline-primary" asp-action="Create" asp-area="Admin" asp-controller="AdminCourses">
-                                    <i class="bi bi-person-plus"></i> Tạo mới
-                                </a>
+                            <a type="button" class="btn btn-outline-primary" asp-action="Create" asp-area="Admin" asp-controller="AdminCourses">
+                                <i class="bi bi-person-plus"></i> Tạo mới
+                            </a>
 
-                                <a type="button" class="btn btn-outline-primary" asp-area="Admin" asp-controller="AdminCategories" asp-action="Index">
-                                    <i class="bi bi-stack"></i> Quản lý danh mục
-                                </a>
+                            <a type="button" class="btn btn-outline-primary" asp-area="Admin" asp-controller="AdminCategories" asp-action="Index">
+                                <i class="bi bi-stack"></i> Quản lý danh mục
+                            </a>
 
-                                <a type="button" class="btn btn-outline-primary" asp-area="Admin" asp-controller="AdminCalendars" asp-action="Index">
-                                    <i class="bi bi-calendar-week"></i> Quản lý lịch học
-                                </a>
+                            <a type="button" class="btn btn-outline-primary" asp-area="Admin" asp-controller="AdminCalendars" asp-action="Index">
+                                <i class="bi bi-calendar-week"></i> Quản lý lịch học
+                            </a>
 
                         </div>
                         <!-- End Card Title -->
@@ -112,13 +112,94 @@
                                             @if (User.IsInRole("Editor") || User.IsInRole("Admin"))
                                             {
                                                 <div class="btn-group">
+
                                                     <a type="button" class="btn btn-outline-warning" asp-action="Edit" asp-area="Admin" asp-controller="AdminCourses" asp-route-id="@item.IdCourse">
                                                         <i class="bi bi-pencil-square"></i> Chỉnh sửa
                                                     </a>
-                                                    <a type="button" class="btn btn-outline-danger" asp-action="Delete" asp-area="Admin" asp-controller="AdminCourses" asp-route-id="@item.IdCourse">
+
+                                                    <a type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#_Delete_@item.IdCourse" asp-route-id="@item.IdCourse">
                                                         <i class="bi bi-eraser-fill"></i> Xóa
                                                     </a>
+
                                                 </div>
+
+
+                                                <!-- Modal Delete -->
+                                                <div class="modal fade" id="_Delete_@item.IdCourse" tabindex="-1">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title">Bạn chắc chắn muốn xóa #@item.IdCourse</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <!-- Table -->
+                                                                <table class="table">
+                                                                    <tbody>
+                                                                        <tr class="text-center">
+                                                                            <th scope="col">Khóa học</th>
+                                                                            <th scope="row">@item.Name</th>
+                                                                        </tr>
+
+                                                                        <tr class="text-center">
+                                                                            <th scope="col">Mô tả</th>
+                                                                            <td>
+                                                                                @item.Description
+                                                                            </td>
+                                                                        </tr>
+
+                                                                        <tr class="text-center">
+                                                                            <th scope="col">Hình ảnh</th>
+                                                                            <td>
+                                                                                <img src="~/images/Courses/@item.Image" width="150px">
+                                                                            </td>
+                                                                        </tr>
+
+
+                                                                        <tr class="text-center">
+                                                                            <th scope="col">Kích hoạt</th>
+                                                                            @if (@item.Active == true)
+                                                                            {
+                                                                                <td class="text-success">
+                                                                                    <i class="bi bi-shield-check"></i> <b>Cho phép</b>
+                                                                                </td>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <td class="text-danger">
+                                                                                    <i class="bi bi-shield-slash"></i> <b>Bị khóa</b>
+                                                                                </td>
+                                                                            }
+                                                                        </tr>
+
+                                                                        <tr class="text-center">
+                                                                            <th scope="col">Danh mục</th>
+                                                                            <td>
+                                                                                @item.IdCategoryNavigation.Name
+                                                                            </td>
+                                                                        </tr>
+
+                                                                    </tbody>
+                                                                </table>
+                                                                <!-- End Table -->
+                                                            </div>
+                                                            <div class="modal-footer">
+
+                                                                <form asp-action="Delete" asp-area="Admin" asp-controller="AdminCourses" asp-route-id="@item.IdCourse">
+                                                                    <button class="btn btn-outline-danger">
+                                                                        <i class="bi bi-eraser-fill"></i> Xóa
+                                                                    </button>
+
+                                                                    <a type="button" class="btn btn-outline-primary" asp-area="Admin" data-bs-dismiss="modal">
+                                                                        <i class="bi bi-reply-fill"></i> Trở về
+                                                                    </a>
+                                                                </form>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- End Modal Delete-->
                                             }
                                         </td>
                                     </tr>
@@ -221,5 +302,5 @@
             });
         </script>
     }
-    </main>
-    <!-- End #main -->
+</main>
+<!-- End #main -->

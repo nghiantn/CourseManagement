@@ -38,19 +38,20 @@
 
                         <!-- Card Title -->
                         <div class="card-title">
-                                <a type="button" class="btn btn-outline-primary" asp-action="Create" asp-area="Admin" asp-controller="AdminCategories">
-                                    <i class="bi bi-person-plus"></i> Tạo mới
-                                </a>
+                            <a type="button" class="btn btn-outline-primary" asp-action="Create" asp-area="Admin" asp-controller="AdminCategories">
+                                <i class="bi bi-person-plus"></i> Tạo mới
+                            </a>
 
-                                <a type="button" class="btn btn-outline-primary" asp-area="Admin" asp-controller="AdminCourses" asp-action="Index">
-                                    <i class="bi bi-book-half"></i> Quản lý khóa học
-                                </a>
+                            <a type="button" class="btn btn-outline-primary" asp-area="Admin" asp-controller="AdminCourses" asp-action="Index">
+                                <i class="bi bi-book-half"></i> Quản lý khóa học
+                            </a>
+                          
                         </div>
                         <!-- End Card Title -->
                         <!-- Table -->
                         <table class="table">
                             <thead>
-                                <tr class="table-primary text-center">
+                                <tr class="table-info text-center">
                                     <th scope="col">Danh mục</th>
                                     <th scope="col">Mô tả</th>
 
@@ -58,40 +59,98 @@
                                 </tr>
                             </thead>
                             <tbody>
+
+                                @Html.Hidden("item-to-delete", "", new {@id = "item-to-delete"})
+
                                 @foreach (var item in Model)
                                 {
+
+
                                     <tr class="text-center">
+
                                         <th scope="row">
                                             <a href="/Admin/AdminCourses?IdCategory=@item.IdCategory&Page=1" class="card-link">
                                                 @item.Name
                                             </a>
                                         </th>
+
                                         <td>
                                             @item.Description
                                         </td>
 
                                         <td>
                                             <div class="btn-group">
+
                                                 <a type="button" class="btn btn-outline-warning" asp-action="Edit" asp-area="Admin" asp-controller="AdminCategories" asp-route-id="@item.IdCategory">
                                                     <i class="bi bi-pencil-square"></i> Chỉnh sửa
                                                 </a>
-                                                <a type="button" class="btn btn-outline-danger" asp-action="Delete" asp-area="Admin" asp-controller="AdminCategories" asp-route-id="@item.IdCategory">
+
+
+                                                <a type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#_Delete_@item.IdCategory" asp-route-id="@item.IdCategory">
                                                     <i class="bi bi-eraser-fill"></i> Xóa
                                                 </a>
+
                                             </div>
+
+                                            <!-- Modal Delete -->
+                                            <div class="modal fade" id="_Delete_@item.IdCategory" tabindex="-1">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title">Bạn chắc chắn muốn xóa #@item.IdCategory</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <!-- Table -->
+                                                            <table class="table">
+                                                                <tbody>
+                                                                    <tr class="text-center">
+                                                                        <th scope="col">Danh mục</th>
+                                                                        <th scope="row">@item.Name</th>
+                                                                    </tr>
+
+                                                                    <tr class="text-center">
+                                                                        <th scope="col">Mô tả</th>
+                                                                        <td>
+                                                                            @item.Description
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                            <!-- End Table -->
+                                                        </div>
+                                                        <div class="modal-footer">
+
+                                                            <form asp-action="Delete" asp-area="Admin" asp-controller="AdminCategories" asp-route-id="@item.IdCategory">
+                                                                <button class="btn btn-outline-danger">
+                                                                    <i class="bi bi-eraser-fill"></i> Xóa
+                                                                </button>
+
+                                                                <a type="button" class="btn btn-outline-primary" asp-area="Admin" data-bs-dismiss="modal">
+                                                                    <i class="bi bi-reply-fill"></i> Trở về
+                                                                </a>
+                                                            </form>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- End Modal Delete-->
+
                                         </td>
+
+
+
                                     </tr>
                                 }
                             </tbody>
                         </table>
                         <!-- End Table -->
 
-
                     </div>
-                </div>
 
+                </div>
             </div>
-        </div>
     </section>
     <!-- End Section -->
     <!-- Pagination -->
@@ -147,5 +206,6 @@
         </ul>
     </nav>
     <!-- End Pagination -->
+
 </main>
 <!-- End #main -->

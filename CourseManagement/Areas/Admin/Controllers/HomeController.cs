@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 namespace CourseManagement.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize]
+    //[Authorize]
    
     public class HomeController : Controller
     { 

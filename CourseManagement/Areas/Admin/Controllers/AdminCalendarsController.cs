@@ -39,14 +39,18 @@ namespace CourseManagement.Areas.Admin.Controllers
                 .AsNoTracking()
                 .Where(x => x.IdCourse == IdCourse)
                 .Include(x => x.IdCourseNavigation)
-                .OrderBy(x => x.IdCalendar).ToList();
+                .Include(x => x.IdTeacherNavigation)
+                .OrderByDescending(x => x.Active)
+                .ThenByDescending(x => x.IdCalendar).ToList();
             }
             else
             {
                 lsCalendars = _context.Calendars
                 .AsNoTracking()
                 .Include(x => x.IdCourseNavigation)
-                .OrderBy(x => x.IdCalendar).ToList();
+                .Include(x => x.IdTeacherNavigation)
+                .OrderByDescending(x => x.Active)
+                .ThenByDescending(x => x.IdCalendar).ToList();
             }
 
             PagedList<Calendar> models = new PagedList<Calendar>(lsCalendars.AsQueryable(), pageNumber, pageSize);
@@ -55,6 +59,30 @@ namespace CourseManagement.Areas.Admin.Controllers
             ViewBag.PageLength = (int)Math.Ceiling((Double)lsCalendars.Count / (Double)pageSize);
             ViewBag.CurrentIdCourse = IdCourse;
             ViewData["IdCourse"] = new SelectList(_context.Courses, "IdCourse", "Name");
+            ViewData["IdTeacher"] = new SelectList(_context.Accounts.Where(x => x.IdRoleNavigation.Name == "Teacher"), "IdAccount", "Fullname");
+            return View(models);
+        }
+
+        public IActionResult Details(int IdCalendar = 0, int page = 1)
+        {
+            var pageNumber = page;
+            var pageSize = 10;
+
+            List<Learn> lsLearns = new List<Learn>();
+
+            lsLearns = _context.Learns
+                .AsNoTracking()
+                .Where(x => x.IdCalendar == IdCalendar)
+                .Include(x => x.IdCalendarNavigation)
+                .Include(x => x.IdStudentNavigation)
+                .OrderBy(x => x.IdStudent).ToList();
+
+            PagedList<Learn> models = new PagedList<Learn>(lsLearns.AsQueryable(), pageNumber, pageSize);
+
+            ViewBag.CurrentPage = pageNumber;
+            ViewBag.PageLength = (int)Math.Ceiling((Double)lsLearns.Count / (Double)pageSize);
+            ViewBag.CurrentId = IdCalendar;
+
             return View(models);
         }
 
@@ -62,25 +90,27 @@ namespace CourseManagement.Areas.Admin.Controllers
         public IActionResult Create()
         {
             ViewData["IdCourse"] = new SelectList(_context.Courses, "IdCourse", "Name");
+            ViewData["IdTeacher"] = new SelectList(_context.Accounts.Where(x => x.IdRoleNavigation.Name == "Teacher"), "IdAccount", "Fullname");
             _notyf.Information("Đang thêm mới");
             return View();
         }
 
-       
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdCalendar,Name,StartTime,EndTime,Length,IdCourse")] Calendar calendar)
+        public async Task<IActionResult> Create([Bind("IdCalendar,Name,StartTime,EndTime,Length,IdCourse,IdTeacher,Slotmax,Active")] Calendar calendar)
         {
             if (ModelState.IsValid)
             {
                 calendar.Length = calendar.EndTime.Subtract(calendar.StartTime).Days;
-
+                calendar.Slotnow = 0;
                 _context.Add(calendar);
                 await _context.SaveChangesAsync();
                 _notyf.Success("Tạo mới thành công");
                 return RedirectToAction(nameof(Index));
             }
             ViewData["IdCourse"] = new SelectList(_context.Courses, "IdCourse", "Name", calendar.IdCourse);
+            ViewData["IdTeacher"] = new SelectList(_context.Accounts.Where(x => x.IdRoleNavigation.Name == "Teacher"), "IdAccount", "Fullname", calendar.IdTeacher);
             return View(calendar);
         }
 
@@ -98,14 +128,15 @@ namespace CourseManagement.Areas.Admin.Controllers
                 return NotFound();
             }
             ViewData["IdCourse"] = new SelectList(_context.Courses, "IdCourse", "Name", calendar.IdCourse);
+            ViewData["IdTeacher"] = new SelectList(_context.Accounts.Where(x => x.IdRoleNavigation.Name == "Teacher"), "IdAccount", "Fullname", calendar.IdTeacher);
             _notyf.Warning("Đang chỉnh sửa");
             return View(calendar);
         }
 
-    
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdCalendar,Name,StartTime,EndTime,Length,IdCourse")] Calendar calendar)
+        public async Task<IActionResult> Edit(int id, [Bind("IdCalendar,Name,StartTime,EndTime,Length,IdCourse,IdTeacher,Slotnow,Slotmax,Active")] Calendar calendar)
         {
             if (id != calendar.IdCalendar)
             {
@@ -117,7 +148,7 @@ namespace CourseManagement.Areas.Admin.Controllers
                 try
                 {
                     calendar.Length = calendar.EndTime.Subtract(calendar.StartTime).Days;
-                   
+
                     _context.Update(calendar);
                     await _context.SaveChangesAsync();
                 }
@@ -136,6 +167,7 @@ namespace CourseManagement.Areas.Admin.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["IdCourse"] = new SelectList(_context.Courses, "IdCourse", "Name", calendar.IdCourse);
+            ViewData["IdTeacher"] = new SelectList(_context.Accounts.Where(x => x.IdRoleNavigation.Name == "Teacher"), "IdAccount", "Fullname", calendar.IdTeacher);
             return View(calendar);
         }
 
@@ -149,6 +181,7 @@ namespace CourseManagement.Areas.Admin.Controllers
 
             var calendar = await _context.Calendars
                 .Include(c => c.IdCourseNavigation)
+                .Include(x => x.IdTeacherNavigation)
                 .FirstOrDefaultAsync(m => m.IdCalendar == id);
             if (calendar == null)
             {

@@ -26,7 +26,7 @@ using CourseManagement.Areas.Admin.Models;
 namespace CourseManagement.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class AdminAccountsController : Controller
     {
         private readonly CourseDatabaseContext _context;

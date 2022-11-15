@@ -37,7 +37,7 @@ namespace CourseManagement.Areas.Admin.Controllers
             List<Category> lsCategories = new List<Category>();
 
             lsCategories = _context.Categories
-            .AsNoTracking()
+                .AsNoTracking()
                 .OrderBy(x => x.IdCategory).ToList();
 
             PagedList<Category> models = new PagedList<Category>(lsCategories.AsQueryable(), pageNumber, pageSize);
@@ -55,7 +55,7 @@ namespace CourseManagement.Areas.Admin.Controllers
             return View();
         }
 
-       
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdCategory,Name,Description")] Category category)
@@ -70,7 +70,7 @@ namespace CourseManagement.Areas.Admin.Controllers
             return View(category);
         }
 
-       
+
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Categories == null)
@@ -87,7 +87,7 @@ namespace CourseManagement.Areas.Admin.Controllers
             return View(category);
         }
 
-       
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("IdCategory,Name,Description")] Category category)
@@ -115,9 +115,10 @@ namespace CourseManagement.Areas.Admin.Controllers
                         throw;
                     }
                 }
+                _notyf.Success("Chỉnh sửa thành công");
                 return RedirectToAction(nameof(Index));
             }
-            _notyf.Success("Chỉnh sửa thành công");
+           
             return View(category);
         }
 
@@ -144,14 +145,14 @@ namespace CourseManagement.Areas.Admin.Controllers
         {
             if (_context.Categories == null)
             {
-                return Problem("Entity set 'CourseDatabaseContext.Categories'  is null.");
+                return Problem("Entity set 'CourseDatabasecontext.Categories'  is null.");
             }
             var category = await _context.Categories.FindAsync(id);
             if (category != null)
             {
                 _context.Categories.Remove(category);
             }
-            
+
             await _context.SaveChangesAsync();
             _notyf.Success("Xóa thành công");
             return RedirectToAction(nameof(Index));
@@ -159,7 +160,7 @@ namespace CourseManagement.Areas.Admin.Controllers
 
         private bool CategoryExists(int id)
         {
-          return _context.Categories.Any(e => e.IdCategory == id);
+            return _context.Categories.Any(e => e.IdCategory == id);
         }
     }
 }

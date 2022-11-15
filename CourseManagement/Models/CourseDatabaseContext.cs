@@ -19,16 +19,14 @@ namespace CourseManagement.Models
         public virtual DbSet<Account> Accounts { get; set; }
         public virtual DbSet<Calendar> Calendars { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
-        public virtual DbSet<Class> Classes { get; set; }
         public virtual DbSet<Course> Courses { get; set; }
-        public virtual DbSet<Judge> Judges { get; set; }
+        public virtual DbSet<Learn> Learns { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-
                 optionsBuilder.UseSqlServer("Data Source=KINNV\\SQLEXPRESS;Initial Catalog=CourseDatabase;Persist Security Info=True;User ID=Vuong;Password=123456");
             }
         }
@@ -79,11 +77,15 @@ namespace CourseManagement.Models
 
                 entity.Property(e => e.IdCalendar).HasColumnName("idCalendar");
 
+                entity.Property(e => e.Active).HasColumnName("active");
+
                 entity.Property(e => e.EndTime)
                     .HasColumnType("datetime")
                     .HasColumnName("endTime");
 
                 entity.Property(e => e.IdCourse).HasColumnName("idCourse");
+
+                entity.Property(e => e.IdTeacher).HasColumnName("idTeacher");
 
                 entity.Property(e => e.Length).HasColumnName("length");
 
@@ -92,6 +94,10 @@ namespace CourseManagement.Models
                     .IsUnicode(false)
                     .HasColumnName("name");
 
+                entity.Property(e => e.Slotmax).HasColumnName("slotmax");
+
+                entity.Property(e => e.Slotnow).HasColumnName("slotnow");
+
                 entity.Property(e => e.StartTime)
                     .HasColumnType("datetime")
                     .HasColumnName("startTime");
@@ -99,7 +105,14 @@ namespace CourseManagement.Models
                 entity.HasOne(d => d.IdCourseNavigation)
                     .WithMany(p => p.Calendars)
                     .HasForeignKey(d => d.IdCourse)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Calendars_Courses");
+
+                entity.HasOne(d => d.IdTeacherNavigation)
+                    .WithMany(p => p.Calendars)
+                    .HasForeignKey(d => d.IdTeacher)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Calendars__idTea__6FE99F9F");
             });
 
             modelBuilder.Entity<Category>(entity =>
@@ -118,36 +131,6 @@ namespace CourseManagement.Models
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("name");
-            });
-
-            modelBuilder.Entity<Class>(entity =>
-            {
-                entity.HasKey(e => e.IdClass);
-
-                entity.ToTable("Classes", "dbo");
-
-                entity.Property(e => e.IdClass).HasColumnName("idClass");
-
-                entity.Property(e => e.IdCalendar).HasColumnName("idCalendar");
-
-                entity.Property(e => e.IdLecturer).HasColumnName("idLecturer");
-
-                entity.Property(e => e.IdStudent).HasColumnName("idStudent");
-
-                entity.HasOne(d => d.IdCalendarNavigation)
-                    .WithMany(p => p.Classes)
-                    .HasForeignKey(d => d.IdCalendar)
-                    .HasConstraintName("FK_Classes_Calendars");
-
-                entity.HasOne(d => d.IdLecturerNavigation)
-                    .WithMany(p => p.ClassIdLecturerNavigations)
-                    .HasForeignKey(d => d.IdLecturer)
-                    .HasConstraintName("FK_Classes_Accounts");
-
-                entity.HasOne(d => d.IdStudentNavigation)
-                    .WithMany(p => p.ClassIdStudentNavigations)
-                    .HasForeignKey(d => d.IdStudent)
-                    .HasConstraintName("FK_Classes_Accounts1");
             });
 
             modelBuilder.Entity<Course>(entity =>
@@ -182,24 +165,28 @@ namespace CourseManagement.Models
                     .HasConstraintName("FK_Courses_Categories");
             });
 
-            modelBuilder.Entity<Judge>(entity =>
+            modelBuilder.Entity<Learn>(entity =>
             {
-                entity.HasKey(e => e.IdJudge);
+                entity.HasKey(e => e.IdLearn)
+                    .HasName("PK_Box");
 
-                entity.ToTable("Judges", "dbo");
+                entity.ToTable("Learn", "dbo");
 
-                entity.Property(e => e.IdJudge).HasColumnName("idJudge");
+                entity.Property(e => e.IdCalendar).HasColumnName("idCalendar");
 
-                entity.Property(e => e.IdClass).HasColumnName("idClass");
+                entity.Property(e => e.IdStudent).HasColumnName("idStudent");
 
-                entity.Property(e => e.Judge1)
-                    .IsUnicode(false)
-                    .HasColumnName("judge");
+                entity.HasOne(d => d.IdCalendarNavigation)
+                    .WithMany(p => p.Learns)
+                    .HasForeignKey(d => d.IdCalendar)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Learn__idCalenda__14270015");
 
-                entity.HasOne(d => d.IdClassNavigation)
-                    .WithMany(p => p.Judges)
-                    .HasForeignKey(d => d.IdClass)
-                    .HasConstraintName("FK_Judges_Classes");
+                entity.HasOne(d => d.IdStudentNavigation)
+                    .WithMany(p => p.Learns)
+                    .HasForeignKey(d => d.IdStudent)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Learn__idStudent__151B244E");
             });
 
             modelBuilder.Entity<Role>(entity =>

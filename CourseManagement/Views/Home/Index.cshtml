@@ -4,98 +4,26 @@
     var courses = ViewBag.course;
 }
 
-<!-- Begin Slider Area -->
-<div class="slider-area">
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+    Launch demo modal
+</button>
 
-    <!-- Main Slider -->
-    <div class="swiper-container main-slider-2 swiper-arrow with-bg_white">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide animation-style-01">
-                <div class="slide-inner bg-height" data-bg-image="../Main/assets/images/slider/bg/slider-3.png">
-                    <div class="container">
-                        <div class="slide-content">
-                            <h2 class="title font-weight-bold mb-4">Learn without <br> limits</h2>
-                            <p class="short-desc different-width mb-9">Start, switch, or advance your career with more than 5,200 courses, Professional Certificates, and degrees from world-class universities and companies.</p>
-                            <div class="button-wrap">
-                                <a class="btn btn-custom-size lg-size btn-primary btn-white-hover rounded-0" asp-area="" asp-controller="Home" asp-action="Courses">Courses Now</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title">This is Modal</h4>
             </div>
-            <div class="swiper-slide animation-style-01">
-                <div class="slide-inner bg-height" data-bg-image="../Main/assets/images/slider/bg/slider-3.png">
-                    <div class="container">
-                        <div class="slide-content">
-                            <h2 class="title font-weight-bold mb-4">Learn without <br> limits</h2>
-                            <p class="short-desc different-width mb-9">Start, switch, or advance your career with more than 5,200 courses, Professional Certificates, and degrees from world-class universities and companies.</p>
-                            <div class="button-wrap">
-                                <a class="btn btn-custom-size lg-size btn-primary btn-white-hover rounded-0" asp-area="" asp-controller="Home" asp-action="Courses">Courses Now</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="modal-body">
+                <p>Modal body</p>
             </div>
-        </div>
-        <!-- Add Pagination -->
-        <div class="swiper-pagination with-bg d-md-none"></div>
-
-        <!-- Add Arrows -->
-        <div class="swiper-button-next"></div>
-        <div class="swiper-button-prev"></div>
-    </div>
-
-</div>
-<!-- Slider Area End Here -->
-
-<!-- Begin Product Area -->
-<div class="product-area section-space-top-100">
-    <div class="container">
-        <div class="section-title text-center pb-55">
-            <span class="sub-title text-primary">See Our Latest</span>
-            <h2 class="title mb-0">Arrival Courses</h2>
-        </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="swiper-container product-list-slider border-issue">
-                    <div class="swiper-wrapper">
-                        @foreach (var course in courses)
-                        {
-                            <div class="swiper-slide">
-                                <div class="product-list-item">
-                                    <div class="product-img img-zoom-effect">
-                                        <a asp-area="" asp-controller="Home" asp-action="Details">
-                                            <img class="img-full" src=@course.Image alt=@course.Name>
-                                        </a>
-                                    </div>
-                                    <div class="product-content">
-                                        <a class="product-name" asp-area="" asp-controller="Home" asp-action="Details" asp-route-id=@course.IdCourse>@course.Name</a>
-                                        <div class="price-box pb-1">
-                                            <span class="new-price">$@course.Price</span>
-                                        </div>
-                                        <div class="rating-box-wrap">
-                                            <div class="product-add-action">
-                                                <ul>
-                                                    <li>
-                                                        <a asp-area="" asp-controller="Home" asp-action="Cart">
-                                                            <i class="pe-7s-cart"></i>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        }
-                    </div>
-                    <!-- Add Arrows -->
-                    <div class="swiper-button-next"></div>
-                    <div class="swiper-button-prev"></div>
-                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
-        </div>
-    </div>
-</div>
-<!-- Product Area End Here -->
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
+<a class="button" asp-controller="Home" asp-area="Admin" asp-action="Index">Admin</a>
