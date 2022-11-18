@@ -61,5 +61,28 @@ namespace CourseManagement.Areas.Admin.Controllers
             }
             return Json(new { status = "success", redirectUrl = url });
         }
+
+        public IActionResult FiltterCalendarsFalse(int IdCourse = 0)
+        {
+            var url = $"/Admin/AdminCalendars/IndexFalse?IdCourse={IdCourse}&Page=1";
+            if (IdCourse == 0)
+            {
+                url = $"/Admin/AdminCalendars/IndexFalse?IdCourse=0&Page=1";
+            }
+            return Json(new { status = "success", redirectUrl = url });
+        }
+
+        //////////////////////////////////////////////////////////////
+        //////Find And Filter Contacts////////////////////////////////
+        //////////////////////////////////////////////////////////////
+        public IActionResult FiltterContacts(int IdStatus = 0)
+        {
+            var url = $"/Admin/AdminContacts?IdStatus={IdStatus}&Page=1";
+            if (IdStatus == 0)
+            {
+                url = $"/Admin/AdminContacts?IdStatus=0&Page=1";
+            }
+            return Json(new { status = "success", redirectUrl = url });
+        }
     }
 }

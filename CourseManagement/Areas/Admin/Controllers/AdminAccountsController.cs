@@ -26,7 +26,7 @@ using CourseManagement.Areas.Admin.Models;
 namespace CourseManagement.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class AdminAccountsController : Controller
     {
         private readonly CourseDatabaseContext _context;
@@ -270,18 +270,17 @@ namespace CourseManagement.Areas.Admin.Controllers
 
         [AllowAnonymous]
         [Route("/dang-nhap.html", Name = "Login")]
-        public IActionResult Login(string returnUrl = null)
+        public IActionResult Login()
         {
             var khID = HttpContext.Session.GetString("IdAccount");
             if (khID != null) return RedirectToAction("Index", "AdminDashboard", new { Area = "Admin" });
-            ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
         [HttpPost]
         [AllowAnonymous]
         [Route("/dang-nhap.html", Name = "Login")]
-        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
+        public async Task<IActionResult> Login(LoginViewModel model)
         {
             try
             {

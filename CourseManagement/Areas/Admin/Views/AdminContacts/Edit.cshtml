@@ -1,0 +1,88 @@
+﻿@model CourseManagement.Models.Contact
+
+@{
+    ViewData["Title"] = "Bạn đang thay đổi lịch học #" + @Model.IdContact;
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- ======= #main ======= -->
+<main id="main" class="main">
+    <!-- Page Title -->
+    <div class="pagetitle">
+        <h1>@ViewData["Title"]</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"> <a asp-area="Admin" asp-controller="Home" asp-action="Index">Trang chủ Admin</a> </li>
+                <li class="breadcrumb-item"> <a asp-area="Admin" asp-controller="AdminContacts" asp-action="Index">Quản lý đăng ký lịch học</a> </li>
+                <li class="breadcrumb-item active">@ViewData["Title"]</li>
+            </ol>
+        </nav>
+    </div>
+    <!-- End Page Title -->
+    <!-- Section -->
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-6">
+
+                <div class="card">
+                    <div class="card-body">
+
+
+                        <!-- Card Title -->
+                        <div class="card-title">
+                        </div>
+                        <!-- End Card Title -->
+                        <!-- Form -->
+                        <form class="row g-3" asp-action="Edit">
+
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                            <div class="form-group col-md-12">
+                                <input asp-for="Fullname" type="text" class="form-control text-info" placeholder="Họ và tên" readonly />
+                                <span asp-validation-for="Fullname" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <input asp-for="Phone" type="text" class="form-control text-info" placeholder="Số điên thoại" readonly />
+                                <span asp-validation-for="Phone" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <input asp-for="Email" type="text" class="form-control text-info" placeholder="Email" readonly />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <select class="form-select" asp-for="IdCalendar" asp-items="ViewBag.IdCalendar" required>
+                                    <option value="0" disabled selected>Lịch học</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <select class="form-select text-info" asp-for="IdStatus" asp-items="ViewBag.IdStatus" onselect="IdStatus" readonly>
+                                </select>
+                            </div>
+
+                            <div class="btn-group">
+                                <input type="hidden" asp-for="IdContact" />
+                                <button class="btn btn-outline-warning">
+                                    <i class="bi bi-save"></i> Lưu
+                                </button>
+                                <a type="button" class="btn btn-outline-danger" asp-area="Admin" asp-controller="AdminContacts" asp-action="Index">
+                                    <i class="bi bi-x-circle"></i> Hủy
+                                </a>
+                            </div>
+                        </form>
+                        <!-- End Form -->
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- End Section -->
+</main>
+<!-- End #main -->
+

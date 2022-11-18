@@ -2,7 +2,7 @@
 @model PagedList.Core.IPagedList<CourseManagement.Models.Calendar>
 
 @{
-    ViewData["Title"] = "Quản lý lịch học (đang mở)";
+    ViewData["Title"] = "Quản lý lịch học (đã đóng)";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
     int PageCurrent = ViewBag.CurrentPage;
     int PageLength = ViewBag.PageLength;
@@ -50,8 +50,8 @@
                             <i class="bi bi-journal-text"></i> Quản lý lớp học
                         </a>
 
-                        <a type="button" class="btn btn-outline-danger" asp-area="Admin" asp-controller="AdminCalendars" asp-action="IndexFalse">
-                            <i class="bi bi-journal-text"></i> Xem lịch học (đã đóng)
+                        <a type="button" class="btn btn-outline-success" asp-area="Admin" asp-controller="AdminCalendars" asp-action="Index">
+                            <i class="bi bi-journal-text"></i> Xem lịch học (đang mở)
                         </a>
 
                         <select class="form-select text-center btn btn-light" id="textIdCourse" name="IdCourse" style="width: 200px;" asp-items="ViewBag.IdCourse" onselect="ViewBag.CurrentIdCourse">
@@ -177,83 +177,133 @@
 
 
                             <div class="btn-group">
-
-                                <a type="button" class="btn btn-outline-warning" asp-action="Edit" asp-area="Admin" asp-controller="AdminCalendars" asp-route-id="@item.IdCalendar">
+                                <button class="btn btn-outline-dark" asp-action="Edit" asp-area="Admin" asp-controller="AdminCalendars" asp-route-id="@item.IdCalendar" disabled>
                                     <i class="bi bi-pencil-square"></i> Chỉnh sửa
-                                </a>
+                                </button>
 
-                                <a type ="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#_Close_@item.IdCalendar" asp-route-id="@item.IdCalendar" disabled>
-                                    <i class="bi bi-door-closed"></i> Đóng
+                                <a class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#_Open_@item.IdCalendar" asp-route-id="@item.IdCalendar">
+                                    <i class="bi bi-door-open"></i> Mở
                                 </a>
                             </div>
 
-                            <!-- Modal Delete -->
-                            <div class="modal fade" id="_Close_@item.IdCalendar" tabindex="-1">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">Bạn chắc chắn muốn xóa #@item.IdCalendar</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <!-- Table -->
-                                            <table class="table">
-                                                <tbody>
-                                                    <tr class="text-center">
-                                                        <th scope="col">Tên lịch học</th>
-                                                        <th scope="row">@item.Name</th>
-                                                    </tr>
+                            @if (item.IdCourseNavigation.Active == false)
+                            {
+                                <!-- Modal Open With Course-->
+                                <div class="modal fade" id="_Open_@item.IdCalendar" tabindex="-1">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Khóa học @item.IdCourseNavigation.Name hiện đã đóng</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <!-- Table -->
+                                                <table class="table">
+                                                    <tbody>
+                                                        <tr class="text-center">
+                                                            <th scope="col">Mở lại khóa học</th>
+                                                            <td>
+                                                                "@item.IdCourseNavigation.Name"
+                                                            </td>
+                                                        </tr>
 
-                                                    <tr class="text-center">
-                                                        <th scope="col">Giảng viên</th>
-                                                        <td>
-                                                            @item.IdTeacherNavigation.Fullname
-                                                        </td>
-                                                    </tr>
+                                                        <tr class="text-center">
+                                                            <th scope="col">Mở lại lịch học</th>
+                                                            <td>
+                                                                "@item.Name"
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <!-- End Table -->
+                                            </div>
+                                            <div class="modal-footer">
 
-                                                    <tr class="text-center">
-                                                        <th scope="col">Thời gian</th>
-                                                        <td>
-                                                            @item.StartTime.ToString("dd/MM/yyy") - @item.EndTime.ToString("dd/MM/yyyy")
-                                                        </td>
-                                                    </tr>
+                                                <form asp-action="OpenWithCourse" asp-area="Admin" asp-controller="AdminCalendars" asp-route-id="@item.IdCalendar">
+                                                    <button class="btn btn-outline-success">
+                                                        <i class="bi bi-door-open"></i> Mở
+                                                    </button>
 
-                                                    <tr class="text-center">
-                                                        <th scope="col">Độ dài khóa học</th>
-                                                        <td>
-                                                            @item.Length ngày
-                                                        </td>
-                                                    </tr>
+                                                    <a type="button" class="btn btn-outline-primary" asp-area="Admin" data-bs-dismiss="modal">
+                                                        <i class="bi bi-reply-fill"></i> Trở về
+                                                    </a>
+                                                </form>
 
-                                                    <tr class="text-center">
-                                                        <th scope="col">Khóa học</th>
-                                                        <td>
-                                                            @item.IdCourseNavigation.Name
-                                                        </td>
-                                                    </tr>
-
-                                                </tbody>
-                                            </table>
-                                            <!-- End Table -->
-                                        </div>
-                                        <div class="modal-footer">
-
-                                            <form asp-action="Close" asp-area="Admin" asp-controller="AdminCalendars" asp-route-id="@item.IdCalendar">
-                                                <button class="btn btn-outline-danger">
-                                                    <i class="bi bi-door-closed"></i> Đóng
-                                                </button>
-
-                                                <a type="button" class="btn btn-outline-primary" asp-area="Admin" data-bs-dismiss="modal">
-                                                    <i class="bi bi-reply-fill"></i> Trở về
-                                                </a>
-                                            </form>
-
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <!-- End Modal Delete-->
+                                <!-- End Modal Open With Course-->
+                            }
+                            else
+                            {
+                                <!-- Modal Open -->
+                                <div class="modal fade" id="_Open_@item.IdCalendar" tabindex="-1">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Bạn chắc chắn muốn xóa #@item.IdCalendar</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <!-- Table -->
+                                                <table class="table">
+                                                    <tbody>
+                                                        <tr class="text-center">
+                                                            <th scope="col">Tên lịch học</th>
+                                                            <th scope="row">@item.Name</th>
+                                                        </tr>
 
+                                                        <tr class="text-center">
+                                                            <th scope="col">Giảng viên</th>
+                                                            <td>
+                                                                @item.IdTeacherNavigation.Fullname
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr class="text-center">
+                                                            <th scope="col">Thời gian</th>
+                                                            <td>
+                                                                @item.StartTime.ToString("dd/MM/yyy") - @item.EndTime.ToString("dd/MM/yyyy")
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr class="text-center">
+                                                            <th scope="col">Độ dài khóa học</th>
+                                                            <td>
+                                                                @item.Length ngày
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr class="text-center">
+                                                            <th scope="col">Khóa học</th>
+                                                            <td>
+                                                                @item.IdCourseNavigation.Name
+                                                            </td>
+                                                        </tr>
+
+                                                    </tbody>
+                                                </table>
+                                                <!-- End Table -->
+                                            </div>
+                                            <div class="modal-footer">
+
+                                                <form asp-action="Open" asp-area="Admin" asp-controller="AdminCalendars" asp-route-id="@item.IdCalendar">
+                                                    <button class="btn btn-outline-success">
+                                                        <i class="bi bi-door-open"></i> Mở
+                                                    </button>
+
+                                                    <a type="button" class="btn btn-outline-primary" asp-area="Admin" data-bs-dismiss="modal">
+                                                        <i class="bi bi-reply-fill"></i> Trở về
+                                                    </a>
+                                                </form>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End Modal Open-->
+                            }
                         </div>
 
                         <div class="card-body">
@@ -360,7 +410,7 @@
                     var IdCourse = parseInt(jQuery(this).children(":selected").attr("value"));
                     $("#textIdCourse > [value=" + IdCourse + "]").attr("selected", true);
                     $.ajax({
-                        url: '/Admin/FindAndFilter/FiltterCalendars',
+                        url: '/Admin/FindAndFilter/FiltterCalendarsFalse',
                         datatype: "json",
                         type: "GET",
                         data: {

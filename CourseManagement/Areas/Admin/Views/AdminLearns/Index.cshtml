@@ -2,7 +2,7 @@
 @model PagedList.Core.IPagedList<CourseManagement.Models.Learn>
 
 @{
-    ViewData["Title"] = "Quản lý lớp học #" + @ViewBag.CurrentId;
+    ViewData["Title"] = "Quản lý lớp học #" + @ViewBag.CurrentIdCalendar;
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
     int PageCurrent = ViewBag.CurrentPage;
     int PageLength = ViewBag.PageLength;
@@ -39,12 +39,12 @@
 
                         <!-- Card Title -->
                         <div class="card-title">
-                            <a type="button" class="btn btn-outline-primary" asp-action="Create" asp-area="Admin" asp-controller="AdminCategories">
-                                <i class="bi bi-person-plus"></i> Tạo mới
+                            <a type="button" class="btn btn-outline-primary" href="/Admin/AdminLearns/Create?IdCalendar=@ViewBag.CurrentIdCalendar">
+                                <i class="bi bi-file-plus-fill"></i> Thêm học viên
                             </a>
 
-                            <a type="button" class="btn btn-outline-primary" asp-area="Admin" asp-controller="AdminCourses" asp-action="Index">
-                                <i class="bi bi-book-half"></i> Quản lý khóa học
+                            <a type="button" class="btn btn-outline-primary" asp-action="Index" asp-area="Admin" asp-controller="AdminCalendars">
+                                <i class="bi bi-reply-fill"></i> Trở về
                             </a>
                         </div>
                         <!-- End Card Title -->
@@ -52,6 +52,7 @@
                         <table class="table">
                             <thead>
                                 <tr class="table-info text-center">
+                                    <th scope="col">ID</th>
                                     <th scope="col">Họ và tên học viên</th>
                                     <th scope="col">Thêm</th>
                                 </tr>
@@ -62,20 +63,18 @@
 
                                 @foreach (var item in Model)
                                 {
-
-
                                     <tr class="text-center">
 
                                         <th scope="row">
-                                            <a href="#" class="card-link">
+                                                @item.IdStudentNavigation.IdAccount
+                                        </th>
+
+                                        <th scope="row">
                                                 @item.IdStudentNavigation.Fullname
-                                            </a>
                                         </th>
 
                                         <td>
                                             <div class="btn-group">
-
-
 
                                                 <a type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#_Delete_@item.IdLearn" asp-route-id="@item.IdLearn">
                                                     <i class="bi bi-eraser-fill"></i> Xóa
@@ -96,7 +95,7 @@
                                                             <table class="table">
                                                                 <tbody>
                                                                     <tr class="text-center">
-                                                                        <th scope="col">Danh mục</th>
+                                                                        <th scope="col">Học viên: </th>
                                                                         <th scope="row">@item.IdStudentNavigation.Fullname</th>
                                                                     </tr>
                                                                 </tbody>
@@ -105,7 +104,7 @@
                                                         </div>
                                                         <div class="modal-footer">
 
-                                                            <form asp-action="Delete" asp-area="Admin" asp-controller="AdminCategories" asp-route-id="@item.IdLearn">
+                                                            <form asp-action="Delete" asp-area="Admin" asp-controller="AdminLearns" asp-route-id="@item.IdLearn">
                                                                 <button class="btn btn-outline-danger">
                                                                     <i class="bi bi-eraser-fill"></i> Xóa
                                                                 </button>
@@ -135,6 +134,7 @@
 
                 </div>
             </div>
+        </div>
     </section>
     <!-- End Section -->
     <!-- Pagination -->

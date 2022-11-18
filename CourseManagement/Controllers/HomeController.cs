@@ -13,11 +13,13 @@ namespace CourseManagement.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly CourseDatabaseContext _context;
         private readonly ILogger<HomeController> _logger;
         public INotyfService _notyf;
 
-        public HomeController(ILogger<HomeController> logger, INotyfService notyf)
+        public HomeController(CourseDatabaseContext context, ILogger<HomeController> logger, INotyfService notyf)
         {
+            _context = context;
             _logger = logger;
             _notyf = notyf;
         }
@@ -26,6 +28,9 @@ namespace CourseManagement.Controllers
         {
             //_notyf.Custom("Custom Notification - closes in 5 seconds.", 5, "whitesmoke", "fa fa-gear");
             //_notyf.Custom("Custom Notification - closes in 10 seconds.", 10, "#B600FF", "fa fa-home");
+            var courseDatabaseContext = _context.Courses.Include(c => c.IdCategoryNavigation);
+            ViewBag.course = courseDatabaseContext;
+
             return View();
         }
 
@@ -42,8 +47,18 @@ namespace CourseManagement.Controllers
         }
 
         // GET: Home/Details
-        public IActionResult Details()
+        public async Task<IActionResult> Details(int? id)
         {
+            if (id == null || _context.Courses == null)
+            {
+                return NotFound();
+            }
+            var course = await _context.Courses
+                .Include(a => a.IdCategoryNavigation)
+                .FirstOrDefaultAsync(m => m.IdCourse == id);
+
+            ViewBag.course = course;
+
             return View();
         }
 
@@ -61,24 +76,6 @@ namespace CourseManagement.Controllers
 
         // GET: Home/Contact
         public IActionResult Contact()
-        {
-            return View();
-        }
-
-        // GET: Home/Login
-        public IActionResult Login()
-        {
-            return View();
-        }
-
-        // GET: Home/Register
-        public IActionResult Register()
-        {
-            return View();
-        }
-
-        // GET: Home/Cart
-        public IActionResult Cart()
         {
             return View();
         }

@@ -136,6 +136,27 @@ namespace CourseManagement.Helpper
             }
             return url;
         }
+
+        public static string toUsername(string name, string phone)
+        {
+            name = name.ToLower();
+            name = Regex.Replace(name, @"[áàạảãâấầậẩẫăắằặẳẵ]", "a");
+            name = Regex.Replace(name, @"[éèẹẻẽêếềệểễ]", "e");
+            name = Regex.Replace(name, @"[óòọỏõôốồộổỗơớờợởỡ]", "o");
+            name = Regex.Replace(name, @"[íìịỉĩ]", "i");
+            name = Regex.Replace(name, @"[ýỳỵỉỹ]", "y");
+            name = Regex.Replace(name, @"[úùụủũưứừựửữ]", "u");
+            name = Regex.Replace(name, @"[đ]", "d");
+
+            //2. Chỉ cho phép nhận:[0-9a-z-\s]
+            name = Regex.Replace(name.Trim(), @"[^0-9a-z-\s]", "").Trim();
+
+            //xử lý nhiều hơn 1 khoảng trắng --> 1 kt
+            name = Regex.Replace(name.Trim(), @"\s+", "");
+
+            return name.Trim() + phone + "stu";
+        }
+
         public static async Task<string> UploadFile(Microsoft.AspNetCore.Http.IFormFile file, string sDirectory, string newname = null)
         {
             try

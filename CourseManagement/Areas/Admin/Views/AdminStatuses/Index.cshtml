@@ -1,8 +1,8 @@
 ﻿@using PagedList.Core.Mvc
-@model PagedList.Core.IPagedList<CourseManagement.Models.Role>
+@model PagedList.Core.IPagedList<CourseManagement.Models.Status>
 
 @{
-    ViewData["Title"] = "Quản lý quyền truy cập";
+    ViewData["Title"] = "Quản lý trạng thái đăng ký";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
     int PageCurrent = ViewBag.CurrentPage;
     int PageLength = ViewBag.PageLength;
@@ -39,12 +39,12 @@
                         <!-- Card Title -->
                         <div class="card-title">
 
-                            <a type="button" class="btn btn-outline-primary" asp-action="Create" asp-area="Admin" asp-controller="AdminRoles">
+                            <a type="button" class="btn btn-outline-primary" asp-action="Create" asp-area="Admin" asp-controller="AdminStatuses">
                                 <i class="bi bi-person-plus"></i> Tạo mới
                             </a>
 
-                            <a type="button" class="btn btn-outline-primary" asp-area="Admin" asp-controller="AdminAccounts" asp-action="Index">
-                                <i class="bi bi-person-square"></i> Quản lý tài khoản
+                            <a type="button" class="btn btn-outline-primary" asp-area="Admin" asp-controller="AdminContacts" asp-action="Index">
+                                <i class="bi bi-clipboard-data"></i> Quản lý đăng ký lịch học
                             </a>
                         </div>
                         <!-- End Card Title -->
@@ -52,7 +52,7 @@
                         <table class="table">
                             <thead>
                                 <tr class="table-info text-center">
-                                    <th scope="col">Quyền truy cập</th>
+                                    <th scope="col">Trạng thái</th>
                                     <th scope="col">Mô tả</th>
 
                                     <th scope="col">Thêm</th>
@@ -63,7 +63,7 @@
                                 {
                                     <tr class="text-center">
                                         <th scope="row">
-                                            <a href="/Admin/AdminAccounts?IdRole=@item.IdRole&Page=1">
+                                            <a href="/Admin/AdminStatuses?IdStatus=@item.IdStatus&Page=1">
                                                 @item.Name
                                             </a>
                                         </th>
@@ -74,21 +74,21 @@
                                         <td>
                                             <div class="btn-group">
 
-                                                <a type="button" class="btn btn-outline-warning" asp-action="Edit" asp-area="Admin" asp-controller="AdminRoles" asp-route-id="@item.IdRole">
+                                                <a type="button" class="btn btn-outline-warning" asp-action="Edit" asp-area="Admin" asp-controller="AdminStatuses" asp-route-id="@item.IdStatus">
                                                     <i class="bi bi-pencil-square"></i> Chỉnh sửa
                                                 </a>
 
-                                                <a type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#_Delete_@item.IdRole" asp-route-id="@item.IdRole">
+                                                <a type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#_Delete_@item.IdStatus" asp-route-id="@item.IdStatus">
                                                     <i class="bi bi-eraser-fill"></i> Xóa
                                                 </a>
 
                                             </div>
                                             <!-- Modal Delete -->
-                                            <div class="modal fade" id="_Delete_@item.IdRole" tabindex="-1">
+                                            <div class="modal fade" id="_Delete_@item.IdStatus" tabindex="-1">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title">Bạn chắc chắn muốn xóa #@item.IdRole</h5>
+                                                            <h5 class="modal-title">Bạn chắc chắn muốn xóa #@item.IdStatus</h5>
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
@@ -96,7 +96,7 @@
                                                             <table class="table">
                                                                 <tbody>
                                                                     <tr class="text-center">
-                                                                        <th scope="col">Quyền truy cập</th>
+                                                                        <th scope="col">Trạng thái</th>
                                                                         <th scope="row">@item.Name</th>
                                                                     </tr>
 
@@ -112,7 +112,7 @@
                                                         </div>
                                                         <div class="modal-footer">
 
-                                                            <form asp-action="Delete" asp-area="Admin" asp-controller="AdminRoles" asp-route-id="@item.IdRole">
+                                                            <form asp-action="Delete" asp-area="Admin" asp-controller="AdminStatuses" asp-route-id="@item.IdStatus">
                                                                 <button class="btn btn-outline-danger">
                                                                     <i class="bi bi-eraser-fill"></i> Xóa
                                                                 </button>

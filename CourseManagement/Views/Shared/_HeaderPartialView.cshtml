@@ -1,110 +1,57 @@
 ﻿<!-- Begin Main Header Area -->
-        <header class="main-header_area position-relative">
-            <div class="header-middle py-5">
-                <div class="container">
-                    <div class="row align-items-center">
-                        <div class="col-lg-12">
-                            <div class="header-middle-wrap">
-                                <a class="header-logo" asp-area="" asp-controller="Home" asp-action="Index">
-                                    <img src="~/Main/assets/images/logo/dark.png" alt="Header Logo">
-                                </a>
-                                <div class="col-lg-6 header-search-area d-none d-lg-block">
-                                    <form action="#" class="header-searchbox">
-                                        <input class="input-field" type="text" placeholder="Search Products">
-                                        <button class="btn btn-outline-whisper btn-primary-hover" type="submit"><i class="pe-7s-search"></i></button>
-                                    </form>
-                                </div>
-                                <div class="header-right">
-                                    <ul>
-                                        <li class="d-none d-md-block">
-                                            <a asp-area="" asp-controller="Home" asp-action="Login">
-                                                Login
-                                            </a>
-                                        </li>
-                                        <li class="d-none d-md-block">
-                                            <a asp-area="" asp-controller="Home" asp-action="Register">
-                                                Register
-                                            </a>
-                                        </li>
-                                        <li class="d-block d-lg-none">
-                                            <a href="#searchBar" class="search-btn toolbar-btn">
-                                                <i class="pe-7s-search"></i>
-                                            </a>
-                                        </li>
-                                        <li class="minicart-wrap me-3 me-lg-0">
-                                            <a href="#miniCart" class="minicart-btn toolbar-btn">
-                                                <i class="pe-7s-shopbag"></i>
-                                                <span class="quantity">3</span>
-                                            </a>
-                                        </li>
-                                        <li class="mobile-menu_wrap d-block d-lg-none">
-                                            <a href="#mobileMenu" class="mobile-menu_btn toolbar-btn pl-0">
-                                                <i class="pe-7s-menu"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
+<header class="main-header_area position-relative">
+    <div class="header-middle py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-12">
+                    <div class="header-middle-wrap">
+                        <a class="header-logo" asp-area="" asp-controller="Home" asp-action="Index">
+                            <img src="~/Main/assets/images/logo/dark.png" alt="Header Logo">
+                        </a>
+                        <div class="col-lg-6 header-search-area d-none d-lg-block">
+                            <form action="#" class="header-searchbox">
+                                <input class="input-field" type="text" placeholder="Search Products">
+                                <button class="btn btn-outline-whisper btn-primary-hover" type="submit"><i class="pe-7s-search"></i></button>
+                            </form>
+                        </div>
+                        <div class="header-right">
+                            <ul>
+                                <li class="d-block d-lg-none">
+                                    <a href="#searchBar" class="search-btn toolbar-btn">
+                                        <i class="pe-7s-search"></i>
+                                    </a>
+                                </li>
+                                <li class="mobile-menu_wrap d-block d-lg-none">
+                                    <a href="#mobileMenu" class="mobile-menu_btn toolbar-btn pl-0">
+                                        <i class="pe-7s-menu"></i>
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="main-header header-sticky" data-bg-color="#bac34e">
-                <div class="container">
-                    <div class="main-header_nav position-relative">
-                        <div class="row align-items-center">
-                            <div class="col-lg-12 d-none d-lg-block">
-                                <div class="main-menu">
-                                    <nav class="main-nav">
-                                        <ul>
-                                            <li>
-                                                <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                                            </li>
-                                            <li>
-                                                <a asp-area="" asp-controller="Home" asp-action="About">About</a>
-                                            </li>
-                                               <li>
-                                                 <a asp-area="" asp-controller="Home" asp-action="Courses">Courses</a>
-                                            </li>
-                                            <li>
-                                                <a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
-                                            </li>
-                                        </ul>
-                                    </nav>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="mobile-menu_wrapper" id="mobileMenu">
-                <div class="harmic-offcanvas-body">
-                    <div class="inner-body">
-                        <div class="harmic-offcanvas-top">
-                            <a href="#" class="button-close"><i class="pe-7s-close"></i></a>
-                        </div>
-                        <div class="offcanvas-menu_area">
-                            <nav class="offcanvas-navigation">
-                                <ul class="mobile-menu">
+        </div>
+    </div>
+    <div class="main-header header-sticky" data-bg-color="#bac34e">
+        <div class="container">
+            <div class="main-header_nav position-relative">
+                <div class="row align-items-center">
+                    <div class="col-lg-12 d-none d-lg-block">
+                        <div class="main-menu">
+                            <nav class="main-nav">
+                                <ul>
                                     <li>
-                                        <a asp-area="" asp-controller="Home" asp-action="Index">
-                                            <span class="mm-text">Home</span>
-                                        </a>
+                                        <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                                     </li>
                                     <li>
-                                        <a asp-area="" asp-controller="Home" asp-action="About">
-                                            <span class="mm-text">About</span>
-                                        </a>
+                                        <a asp-area="" asp-controller="Home" asp-action="About">About</a>
                                     </li>
                                     <li>
-                                        <a asp-area="" asp-controller="Home" asp-action="Courses">
-                                             <span class="mm-text">Courses</span>
-                                        </a>
+                                        <a asp-area="" asp-controller="Home" asp-action="Courses">Courses</a>
                                     </li>
                                     <li>
-                                        <a asp-area="" asp-controller="Home" asp-action="Contact">
-                                            <span class="mm-text">Contact</span>
-                                        </a>
+                                        <a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
                                     </li>
                                 </ul>
                             </nav>
@@ -112,77 +59,59 @@
                     </div>
                 </div>
             </div>
-            <div class="offcanvas-search_wrapper" id="searchBar">
-                <div class="harmic-offcanvas-body">
-                    <div class="container h-100">
-                        <div class="offcanvas-search">
-                            <div class="harmic-offcanvas-top">
-                                <a href="#" class="button-close"><i class="pe-7s-close"></i></a>
-                            </div>
-                            <span class="searchbox-info">Start typing and press Enter to search</span>
-                            <form action="#" class="hm-searchbox">
-                                <input type="text" placeholder="Search">
-                                <button class="search-btn" type="submit"><i class="pe-7s-search"></i></button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-    <div class="offcanvas-minicart_wrapper" id="miniCart">
+        </div>
+    </div>
+    <div class="mobile-menu_wrapper" id="mobileMenu">
         <div class="harmic-offcanvas-body">
-            <div class="minicart-content">
-                <div class="minicart-heading">
-                    <h4 class="mb-0">Shopping Cart</h4>
+            <div class="inner-body">
+                <div class="harmic-offcanvas-top">
                     <a href="#" class="button-close"><i class="pe-7s-close"></i></a>
                 </div>
-                <ul class="minicart-list">
-                    <li class="minicart-product">
-                        <a class="product-item_remove" href="#">
-                            <i class="pe-7s-close"></i>
-                        </a>
-                        <a asp-area="" asp-controller="Home" asp-action="Courses" class="product-item_img">
-                            <img class="img-full" src="../Main/assets/images/product/small-size/1-1-112x124.jpg" alt="Product Image">
-                        </a>
-                        <div class="product-item_content">
-                            <a class="product-item_title" asp-area="" asp-controller="Home" asp-action="Courses">Black Pepper Grains</a>
-                            <span class="product-item_quantity">1 x $80.00</span>
-                        </div>
-                    </li>
-                    <li class="minicart-product">
-                        <a class="product-item_remove" href="#">
-                            <i class="pe-7s-close"></i>
-                        </a>
-                        <a asp-area="" asp-controller="Home" asp-action="Courses" class="product-item_img">
-                            <img class="img-full" src="../Main/assets/images/product/small-size/1-2-112x124.jpg" alt="Product Image">
-                        </a>
-                        <div class="product-item_content">
-                            <a class="product-item_title" asp-area="" asp-controller="Home" asp-action="Courses">Peanut Big Bean</a>
-                            <span class="product-item_quantity">1 x $80.00</span>
-                        </div>
-                    </li>
-                    <li class="minicart-product">
-                        <a class="product-item_remove" href="#">
-                            <i class="pe-7s-close"></i>
-                        </a>
-                        <a asp-area="" asp-controller="Home" asp-action="Courses" class="product-item_img">
-                            <img class="img-full" src="../Main/assets/images/product/small-size/1-3-112x124.jpg" alt="Product Image">
-                        </a>
-                        <div class="product-item_content">
-                            <a class="product-item_title" asp-area="" asp-controller="Home" asp-action="Courses">Dried Lemon Green</a>
-                            <span class="product-item_quantity">1 x $80.00</span>
-                        </div>
-                    </li>
-                </ul>
+                <div class="offcanvas-menu_area">
+                    <nav class="offcanvas-navigation">
+                        <ul class="mobile-menu">
+                            <li>
+                                <a asp-area="" asp-controller="Home" asp-action="Index">
+                                    <span class="mm-text">Home</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-area="" asp-controller="Home" asp-action="About">
+                                    <span class="mm-text">About</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-area="" asp-controller="Home" asp-action="Courses">
+                                    <span class="mm-text">Courses</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-area="" asp-controller="Home" asp-action="Contact">
+                                    <span class="mm-text">Contact</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
             </div>
-            <div class="minicart-item_total">
-                <span>Subtotal</span>
-                <span class="ammount">$240.00</span>
-            </div>
-            <div class="group-btn_wrap d-grid gap-2">
-                <a asp-area="" asp-controller="Home" asp-action="Cart" class="btn btn-secondary btn-primary-hover">View Cart</a>
+        </div>
+    </div>
+    <div class="offcanvas-search_wrapper" id="searchBar">
+        <div class="harmic-offcanvas-body">
+            <div class="container h-100">
+                <div class="offcanvas-search">
+                    <div class="harmic-offcanvas-top">
+                        <a href="#" class="button-close"><i class="pe-7s-close"></i></a>
+                    </div>
+                    <span class="searchbox-info">Start typing and press Enter to search</span>
+                    <form action="#" class="hm-searchbox">
+                        <input type="text" placeholder="Search">
+                        <button class="search-btn" type="submit"><i class="pe-7s-search"></i></button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
     <div class="global-overlay"></div>
-        </header>
-        <!-- Main Header Area End Here -->
+</header>
+<!-- Main Header Area End Here -->

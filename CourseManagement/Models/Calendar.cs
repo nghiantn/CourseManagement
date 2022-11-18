@@ -7,6 +7,7 @@ namespace CourseManagement.Models
     {
         public Calendar()
         {
+            Contacts = new HashSet<Contact>();
             Learns = new HashSet<Learn>();
         }
 
@@ -23,6 +24,7 @@ namespace CourseManagement.Models
 
         public virtual Course IdCourseNavigation { get; set; }
         public virtual Account IdTeacherNavigation { get; set; }
+        public virtual ICollection<Contact> Contacts { get; set; }
         public virtual ICollection<Learn> Learns { get; set; }
     }
 }

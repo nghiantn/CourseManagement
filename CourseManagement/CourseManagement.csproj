@@ -19,14 +19,11 @@
 
   <ItemGroup>
     <None Include="Views\Home\About.cshtml" />
-    <None Include="Views\Home\Cart.cshtml" />
     <None Include="Views\Home\Contact.cshtml" />
     <None Include="Views\Home\Courses.cshtml" />
     <None Include="Views\Home\Details.cshtml" />
     <None Include="Views\Home\Index.cshtml" />
-    <None Include="Views\Home\Login.cshtml" />
     <None Include="Views\Home\Privacy.cshtml" />
-    <None Include="Views\Home\Register.cshtml" />
     <None Include="Views\Shared\Error.cshtml" />
     <None Include="Views\Shared\_FooterPartialView.cshtml" />
     <None Include="Views\Shared\_HeaderPartialView.cshtml" />

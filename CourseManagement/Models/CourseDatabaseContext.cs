@@ -19,9 +19,11 @@ namespace CourseManagement.Models
         public virtual DbSet<Account> Accounts { get; set; }
         public virtual DbSet<Calendar> Calendars { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<Contact> Contacts { get; set; }
         public virtual DbSet<Course> Courses { get; set; }
         public virtual DbSet<Learn> Learns { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<Status> Statuses { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -112,7 +114,7 @@ namespace CourseManagement.Models
                     .WithMany(p => p.Calendars)
                     .HasForeignKey(d => d.IdTeacher)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Calendars__idTea__6FE99F9F");
+                    .HasConstraintName("FK__Calendars__idTea__44FF419A");
             });
 
             modelBuilder.Entity<Category>(entity =>
@@ -131,6 +133,47 @@ namespace CourseManagement.Models
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("name");
+            });
+
+            modelBuilder.Entity<Contact>(entity =>
+            {
+                entity.HasKey(e => e.IdContact);
+
+                entity.ToTable("Contact", "dbo");
+
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("email");
+
+                entity.Property(e => e.Fullname)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("fullname");
+
+                entity.Property(e => e.IdCalendar).HasColumnName("idCalendar");
+
+                entity.Property(e => e.IdStatus).HasColumnName("idStatus");
+
+                entity.Property(e => e.Phone)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("phone");
+
+                entity.HasOne(d => d.IdCalendarNavigation)
+                    .WithMany(p => p.Contacts)
+                    .HasForeignKey(d => d.IdCalendar)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Contact__idCalen__46E78A0C");
+
+                entity.HasOne(d => d.IdStatusNavigation)
+                    .WithMany(p => p.Contacts)
+                    .HasForeignKey(d => d.IdStatus)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Contact_Status");
             });
 
             modelBuilder.Entity<Course>(entity =>
@@ -180,13 +223,13 @@ namespace CourseManagement.Models
                     .WithMany(p => p.Learns)
                     .HasForeignKey(d => d.IdCalendar)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Learn__idCalenda__14270015");
+                    .HasConstraintName("FK__Learn__idCalenda__49C3F6B7");
 
                 entity.HasOne(d => d.IdStudentNavigation)
                     .WithMany(p => p.Learns)
                     .HasForeignKey(d => d.IdStudent)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Learn__idStudent__151B244E");
+                    .HasConstraintName("FK__Learn__idStudent__4AB81AF0");
             });
 
             modelBuilder.Entity<Role>(entity =>
@@ -203,6 +246,27 @@ namespace CourseManagement.Models
                     .HasColumnName("description");
 
                 entity.Property(e => e.Name)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("name");
+            });
+
+            modelBuilder.Entity<Status>(entity =>
+            {
+                entity.HasKey(e => e.IdStatus);
+
+                entity.ToTable("Status", "dbo");
+
+                entity.Property(e => e.IdStatus).HasColumnName("idStatus");
+
+                entity.Property(e => e.Description)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("description");
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("name");
