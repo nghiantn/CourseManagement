@@ -1,0 +1,39 @@
+﻿@model IEnumerable<CourseManagement.Models.Course>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Khóa học";
+    var courses = ViewBag.course;
+}
+
+<!-- Begin Product Area -->
+<div class="product-area section-space-top-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="swiper-container product-list-slider border-issue course-list">
+                        @foreach (var course in courses)
+                        {
+                                <div class="product-list-item col-lg-5 course-item">
+                                    <div class="product-img img-zoom-effect">
+                                        <a href="/Calendars/Index?IdCourse=@course.IdCourse">
+                                            <img class="img-full" src=~/images/Courses/@course.Image alt=@course.Name>
+                                        </a>
+                                    </div>
+                                    <div class="product-content">
+                                        <a class="product-name" asp-controller="Course" asp-action="Details" asp-route-id=@course.IdCourse>@course.Name</a>
+                                        <div class="price-box pb-1">
+                                            <span class="new-price">$@course.Price</span>
+                                        </div>
+                                    </div>
+                                </div>
+                        }
+                    <!-- Add Arrows -->
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

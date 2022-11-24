@@ -2,4 +2,4 @@
 Microsoft.EntityFrameworkCore.SqlServer
 Microsoft.EntityFrameworkCore.Tools
 
-Scaffold-DbContext "Data Source=KINNV\SQLEXPRESS;Initial Catalog=CourseDatabase;Persist Security Info=True;User ID=Vuong;Password=123456" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -force
+Scaffold-DbContext "Data Source=NNVUONG;Initial Catalog=CourseDatabase;Persist Security Info=True;User ID=Sa;Password=123456" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -force

@@ -68,11 +68,6 @@ namespace CourseManagement.Controllers
             return View();
         }
 
-        // GET: Home/Courses
-        public IActionResult Courses()
-        {
-            return View();
-        }
 
         // GET: Home/Contact
         public IActionResult Contact()

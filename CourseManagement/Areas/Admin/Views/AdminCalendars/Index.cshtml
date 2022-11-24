@@ -66,234 +66,239 @@
 
             @foreach (var item in Model)
             {
+                
                 int valuenow = item.Slotnow, valuemax = item.Slotmax;
                 int ratio = valuenow * 100 / valuemax;
 
-                <div class="col-xxl-4 col-md-4">
-                    <div class="card info-card sales-card">
-                        <a href="/Admin/AdminLearns/Index?IdCalendar=@item.IdCalendar&Page=1">
-                            <div class="card-body">
+              
+                    <div class="col-xxl-4 col-md-4">
+                        <div class="card info-card sales-card">
+                            <a href="/Admin/AdminLearns/Index?IdCalendar=@item.IdCalendar&Page=1">
+                                <div class="card-body">
 
-                                <div class="card-title fw-bold">
+                                    <div class="card-title fw-bold">
 
-                                    <div class="text-right">
-                                        <span class="text-muted">
-                                            <b>Mã lớp học: #@item.IdCalendar</b>
+                                        <div class="text-right">
+                                            <span class="text-muted">
+                                                <b>Mã lớp học: #@item.IdCalendar</b>
+                                            </span>
+                                        </div>
+
+                                        @item.Name <br />
+                                        <span class="text-dark medium pt-1 fw-bold">
+                                            @item.StartTime.ToString("dd/MM/yyyy") -  @item.EndTime.ToString("dd/MM/yyyy") (@item.Length ngày)
                                         </span>
                                     </div>
 
-                                    @item.Name <br />
-                                    <span class="text-dark medium pt-1 fw-bold">
-                                        @item.StartTime.ToString("dd/MM/yyyy") -  @item.EndTime.ToString("dd/MM/yyyy") (@item.Length ngày)
-                                    </span>
+                                    <div class="d-flex align-items-center">
+
+                                        @if (ratio == 100)
+                                        {
+                                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                                <i class="bi bi-people text-danger"></i>
+                                            </div>
+                                        }
+                                        else if (ratio >= 75)
+                                        {
+                                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                                <i class="bi bi-people text-warning"></i>
+                                            </div>
+                                        }
+                                        else if (ratio >= 50)
+                                        {
+                                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                                <i class="bi bi-people text-info"></i>
+                                            </div>
+                                        }
+                                        else if (ratio >= 25)
+                                        {
+                                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                                <i class="bi bi-people text-success"></i>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                                <i class="bi bi-people text-primary"></i>
+                                            </div>
+                                        }
+
+                                        <div class="ps-3">
+
+                                            <span class="text-mute medium">Giáo viên:</span>
+                                            <span class="text-info medium pt-1 fw-bold">@item.IdTeacherNavigation.Fullname</span>
+
+                                            <div class="align-items-center">
+                                                <span class="text-mute medium">Khóa học:</span>
+                                                <span class="text-info medium pt-1 fw-bold">@item.IdCourseNavigation.Name</span>
+                                            </div>
+
+                                            <div class="align-items-center">
+                                                <span class="text-mute medium">Tổng số:</span>
+                                                <span class="text-info medium pt-1 fw-bold">@valuenow/@valuemax</span>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
                                 </div>
+                            </a>
 
-                                <div class="d-flex align-items-center">
+                            <div class="card-body text-right">
 
-                                    @if (ratio == 100)
+                                @if (item.Active)
+                                {
+                                    @if (valuenow < valuemax)
                                     {
-                                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                            <i class="bi bi-people text-danger"></i>
+                                        <div class="align-items-center">
+                                            <span class="text-success">
+                                                <i class="bi bi-door-open-fill"></i> <b>Còn trống @(valuemax - valuenow)</b>
+                                            </span>
                                         </div>
-                                    }
-                                    else if (ratio >= 75)
-                                    {
-                                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                            <i class="bi bi-people text-warning"></i>
-                                        </div>
-                                    }
-                                    else if (ratio >= 50)
-                                    {
-                                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                            <i class="bi bi-people text-info"></i>
-                                        </div>
-                                    }
-                                    else if (ratio >= 25)
-                                    {
-                                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                            <i class="bi bi-people text-success"></i>
-                                        </div>
+
                                     }
                                     else
                                     {
-                                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                            <i class="bi bi-people text-primary"></i>
+                                        <div class="align-items-center">
+                                            <span class="text-danger">
+                                                <i class="bi bi-door-closed-fill"></i> <b>Hết chỗ</b>
+                                            </span>
                                         </div>
                                     }
-
-                                    <div class="ps-3">
-
-                                        <span class="text-mute medium">Giáo viên:</span>
-                                        <span class="text-info medium pt-1 fw-bold">@item.IdTeacherNavigation.Fullname</span>
-
-                                        <div class="align-items-center">
-                                            <span class="text-mute medium">Khóa học:</span>
-                                            <span class="text-info medium pt-1 fw-bold">@item.IdCourseNavigation.Name</span>
-                                        </div>
-
-                                        <div class="align-items-center">
-                                            <span class="text-mute medium">Tổng số:</span>
-                                            <span class="text-info medium pt-1 fw-bold">@valuenow/@valuemax</span>
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-                        </a>
-
-                        <div class="card-body text-right">
-
-                            @if (item.Active)
-                            {
-                                @if (valuenow < valuemax)
-                                {
-                                    <div class="align-items-center">
-                                        <span class="text-success">
-                                            <i class="bi bi-door-open-fill"></i> <b>Còn trống @(valuemax - valuenow)</b>
-                                        </span>
-                                    </div>
-
                                 }
                                 else
                                 {
                                     <div class="align-items-center">
                                         <span class="text-danger">
-                                            <i class="bi bi-door-closed-fill"></i> <b>Hết chỗ</b>
+                                            <i class="bi bi-door-closed"></i> <b>Lớp học đã đóng</b>
                                         </span>
                                     </div>
                                 }
-                            }
-                            else
-                            {
-                                <div class="align-items-center">
-                                    <span class="text-danger">
-                                        <i class="bi bi-door-closed"></i> <b>Lớp học đã đóng</b>
-                                    </span>
+
+
+
+                                <div class="btn-group">
+
+                                    <a type="button" class="btn btn-outline-warning" asp-action="Edit" asp-area="Admin" asp-controller="AdminCalendars" asp-route-id="@item.IdCalendar">
+                                        <i class="bi bi-pencil-square"></i> Chỉnh sửa
+                                    </a>
+
+                                    <a type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#_Close_@item.IdCalendar" asp-route-id="@item.IdCalendar" disabled>
+                                        <i class="bi bi-door-closed"></i> Đóng
+                                    </a>
                                 </div>
-                            }
 
+                                <!-- Modal Delete -->
+                                <div class="modal fade" id="_Close_@item.IdCalendar" tabindex="-1">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Bạn chắc chắn muốn xóa #@item.IdCalendar</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <!-- Table -->
+                                                <table class="table">
+                                                    <tbody>
+                                                        <tr class="text-center">
+                                                            <th scope="col">Tên lịch học</th>
+                                                            <th scope="row">@item.Name</th>
+                                                        </tr>
 
+                                                        <tr class="text-center">
+                                                            <th scope="col">Giảng viên</th>
+                                                            <td>
+                                                                @item.IdTeacherNavigation.Fullname
+                                                            </td>
+                                                        </tr>
 
-                            <div class="btn-group">
+                                                        <tr class="text-center">
+                                                            <th scope="col">Thời gian</th>
+                                                            <td>
+                                                                @item.StartTime.ToString("dd/MM/yyy") - @item.EndTime.ToString("dd/MM/yyyy")
+                                                            </td>
+                                                        </tr>
 
-                                <a type="button" class="btn btn-outline-warning" asp-action="Edit" asp-area="Admin" asp-controller="AdminCalendars" asp-route-id="@item.IdCalendar">
-                                    <i class="bi bi-pencil-square"></i> Chỉnh sửa
-                                </a>
+                                                        <tr class="text-center">
+                                                            <th scope="col">Độ dài khóa học</th>
+                                                            <td>
+                                                                @item.Length ngày
+                                                            </td>
+                                                        </tr>
 
-                                <a type ="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#_Close_@item.IdCalendar" asp-route-id="@item.IdCalendar" disabled>
-                                    <i class="bi bi-door-closed"></i> Đóng
-                                </a>
-                            </div>
+                                                        <tr class="text-center">
+                                                            <th scope="col">Khóa học</th>
+                                                            <td>
+                                                                @item.IdCourseNavigation.Name
+                                                            </td>
+                                                        </tr>
 
-                            <!-- Modal Delete -->
-                            <div class="modal fade" id="_Close_@item.IdCalendar" tabindex="-1">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">Bạn chắc chắn muốn xóa #@item.IdCalendar</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <!-- Table -->
-                                            <table class="table">
-                                                <tbody>
-                                                    <tr class="text-center">
-                                                        <th scope="col">Tên lịch học</th>
-                                                        <th scope="row">@item.Name</th>
-                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                                <!-- End Table -->
+                                            </div>
+                                            <div class="modal-footer">
 
-                                                    <tr class="text-center">
-                                                        <th scope="col">Giảng viên</th>
-                                                        <td>
-                                                            @item.IdTeacherNavigation.Fullname
-                                                        </td>
-                                                    </tr>
+                                                <form asp-action="Close" asp-area="Admin" asp-controller="AdminCalendars" asp-route-id="@item.IdCalendar">
+                                                    <button class="btn btn-outline-danger">
+                                                        <i class="bi bi-door-closed"></i> Đóng
+                                                    </button>
 
-                                                    <tr class="text-center">
-                                                        <th scope="col">Thời gian</th>
-                                                        <td>
-                                                            @item.StartTime.ToString("dd/MM/yyy") - @item.EndTime.ToString("dd/MM/yyyy")
-                                                        </td>
-                                                    </tr>
+                                                    <a type="button" class="btn btn-outline-primary" asp-area="Admin" data-bs-dismiss="modal">
+                                                        <i class="bi bi-reply-fill"></i> Trở về
+                                                    </a>
+                                                </form>
 
-                                                    <tr class="text-center">
-                                                        <th scope="col">Độ dài khóa học</th>
-                                                        <td>
-                                                            @item.Length ngày
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr class="text-center">
-                                                        <th scope="col">Khóa học</th>
-                                                        <td>
-                                                            @item.IdCourseNavigation.Name
-                                                        </td>
-                                                    </tr>
-
-                                                </tbody>
-                                            </table>
-                                            <!-- End Table -->
-                                        </div>
-                                        <div class="modal-footer">
-
-                                            <form asp-action="Close" asp-area="Admin" asp-controller="AdminCalendars" asp-route-id="@item.IdCalendar">
-                                                <button class="btn btn-outline-danger">
-                                                    <i class="bi bi-door-closed"></i> Đóng
-                                                </button>
-
-                                                <a type="button" class="btn btn-outline-primary" asp-area="Admin" data-bs-dismiss="modal">
-                                                    <i class="bi bi-reply-fill"></i> Trở về
-                                                </a>
-                                            </form>
-
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                                <!-- End Modal Delete-->
+
                             </div>
-                            <!-- End Modal Delete-->
+
+                            <div class="card-body">
+
+                                @if (ratio == 100)
+                                {
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-striped bg-danger progress-bar-animated" role="progressbar" style="width:@ratio%" aria-valuenow="@valuenow" aria-valuemin="0" aria-valuemax="@valuemax"></div>
+                                    </div>
+                                }
+                                else if (ratio >= 75)
+                                {
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-striped bg-warning progress-bar-animated" role="progressbar" style="width:@ratio%" aria-valuenow="@valuenow" aria-valuemin="0" aria-valuemax="@valuemax"></div>
+                                    </div>
+                                }
+                                else if (ratio >= 50)
+                                {
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-striped bg-info progress-bar-animated" role="progressbar" style="width:@ratio%" aria-valuenow="@valuenow" aria-valuemin="0" aria-valuemax="@valuemax"></div>
+                                    </div>
+                                }
+                                else if (ratio >= 25)
+                                {
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar" style="width:@ratio%" aria-valuenow="@valuenow" aria-valuemin="0" aria-valuemax="@valuemax"></div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-striped bg-primary progress-bar-animated" role="progressbar" style="width:@ratio%" aria-valuenow="@valuenow" aria-valuemin="0" aria-valuemax="@valuemax"></div>
+                                    </div>
+                                }
+
+                            </div>
 
                         </div>
-
-                        <div class="card-body">
-
-                            @if (ratio == 100)
-                            {
-                                <div class="progress">
-                                    <div class="progress-bar progress-bar-striped bg-danger progress-bar-animated" role="progressbar" style="width:@ratio%" aria-valuenow="@valuenow" aria-valuemin="0" aria-valuemax="@valuemax"></div>
-                                </div>
-                            }
-                            else if (ratio >= 75)
-                            {
-                                <div class="progress">
-                                    <div class="progress-bar progress-bar-striped bg-warning progress-bar-animated" role="progressbar" style="width:@ratio%" aria-valuenow="@valuenow" aria-valuemin="0" aria-valuemax="@valuemax"></div>
-                                </div>
-                            }
-                            else if (ratio >= 50)
-                            {
-                                <div class="progress">
-                                    <div class="progress-bar progress-bar-striped bg-info progress-bar-animated" role="progressbar" style="width:@ratio%" aria-valuenow="@valuenow" aria-valuemin="0" aria-valuemax="@valuemax"></div>
-                                </div>
-                            }
-                            else if (ratio >= 25)
-                            {
-                                <div class="progress">
-                                    <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar" style="width:@ratio%" aria-valuenow="@valuenow" aria-valuemin="0" aria-valuemax="@valuemax"></div>
-                                </div>
-                            }
-                            else
-                            {
-                                <div class="progress">
-                                    <div class="progress-bar progress-bar-striped bg-primary progress-bar-animated" role="progressbar" style="width:@ratio%" aria-valuenow="@valuenow" aria-valuemin="0" aria-valuemax="@valuemax"></div>
-                                </div>
-                            }
-
-                        </div>
-
                     </div>
-                </div>
-            }
+                }
+
+               
+            
 
         </div>
     </section>
