@@ -25,13 +25,13 @@ namespace CourseManagement.Models
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Status> Statuses { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer("Data Source=KINNV\\SQLEXPRESS;Initial Catalog=CourseDatabase;Persist Security Info=True;User ID=Vuong;Password=123456");
-            }
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    if (!optionsBuilder.IsConfigured)
+        //    {
+        //        optionsBuilder.UseSqlServer("Data Source=KINNV\\SQLEXPRESS;Initial Catalog=CourseDatabase;Persist Security Info=True;User ID=Vuong;Password=123456");
+        //    }
+        //}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

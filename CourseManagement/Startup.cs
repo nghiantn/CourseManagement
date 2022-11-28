@@ -33,7 +33,7 @@ namespace CourseManagement
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var connectionStrings = Configuration.GetConnectionString("DevConnection");
+            var connectionStrings = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<CourseDatabaseContext>(options => options.UseSqlServer(connectionStrings));
 
             services.AddSingleton<HtmlEncoder>(HtmlEncoder.Create(allowedRanges: new[] { UnicodeRanges.All }));
