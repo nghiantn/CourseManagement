@@ -15,7 +15,7 @@
                             <h2 class="title font-weight-bold mb-4">Learn without <br> limits</h2>
                             <p class="short-desc different-width mb-9">Start, switch, or advance your career with more than 5,200 courses, Professional Certificates, and degrees from world-class universities and companies.</p>
                             <div class="button-wrap">
-                                <a class="btn btn-custom-size lg-size btn-primary btn-white-hover rounded-0" asp-area="" asp-controller="Home" asp-action="Courses">Courses Now</a>
+                                <a class="btn btn-custom-size lg-size btn-primary btn-white-hover rounded-0" asp-area="" asp-controller="Course" asp-action="Index">Courses Now</a>
                             </div>
                         </div>
                     </div>
@@ -28,7 +28,7 @@
                             <h2 class="title font-weight-bold mb-4">Learn without <br> limits</h2>
                             <p class="short-desc different-width mb-9">Start, switch, or advance your career with more than 5,200 courses, Professional Certificates, and degrees from world-class universities and companies.</p>
                             <div class="button-wrap">
-                                <a class="btn btn-custom-size lg-size btn-primary btn-white-hover rounded-0" asp-area="" asp-controller="Home" asp-action="Courses">Courses Now</a>
+                                <a class="btn btn-custom-size lg-size btn-primary btn-white-hover rounded-0" asp-area="" asp-controller="Course" asp-action="Index">Courses Now</a>
                             </div>
                         </div>
                     </div>
@@ -65,7 +65,7 @@
                                         </a>
                                     </div>
                                     <div class="product-content">
-                                        <a class="product-name" asp-controller="Course" asp-action="Details" asp-route-id=@course.IdCourse>@course.Name</a>
+                                        <a class="product-name" asp-controller="Calendars" asp-action="Index" asp-route-id=@course.IdCourse>@course.Name</a>
                                         <div class="price-box pb-1">
                                             <span class="new-price">$@course.Price</span>
                                         </div>

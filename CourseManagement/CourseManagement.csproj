@@ -17,23 +17,4 @@
     <PackageReference Include="PagedList.Core.Mvc" Version="3.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Include="Views\Course\Create.cshtml" />
-    <None Include="Views\Course\Delete.cshtml" />
-    <None Include="Views\Course\Details.cshtml" />
-    <None Include="Views\Course\Edit.cshtml" />
-    <None Include="Views\Course\Index.cshtml" />
-    <None Include="Views\Home\About.cshtml" />
-    <None Include="Views\Home\Cart.cshtml" />
-    <None Include="Views\Home\Contact.cshtml" />
-    <None Include="Views\Home\Index.cshtml" />
-    <None Include="Views\Shared\Error.cshtml" />
-    <None Include="Views\Shared\_FooterPartialView.cshtml" />
-    <None Include="Views\Shared\_HeaderPartialView.cshtml" />
-    <None Include="Views\Shared\_Layout.cshtml" />
-    <None Include="Views\Shared\_ValidationScriptsPartial.cshtml" />
-    <None Include="Views\_ViewImports.cshtml" />
-    <None Include="Views\_ViewStart.cshtml" />
-  </ItemGroup>
-
 </Project>

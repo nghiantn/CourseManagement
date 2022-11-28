@@ -1,39 +1,118 @@
-﻿@model IEnumerable<CourseManagement.Models.Course>
+﻿@using PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<CourseManagement.Models.Course>
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewData["Title"] = "Khóa học";
-    var courses = ViewBag.course;
+    int PageCurrent = ViewBag.CurrentPage;
+    int PageLength = ViewBag.PageLength;
+    int PageBack = PageCurrent - 1;
+    int PageNext = PageCurrent + 1;
+    int PageCategory = ViewBag.CurrentIdCategory;
+    int PageNextPlus = PageNext + 1;
+    int PageNextMinus = PageBack - 1;
 }
 
-<!-- Begin Product Area -->
-<div class="product-area section-space-top-100">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="swiper-container product-list-slider border-issue course-list">
-                        @foreach (var course in courses)
-                        {
-                                <div class="product-list-item col-lg-5 course-item">
-                                    <div class="product-img img-zoom-effect">
-                                        <a href="/Calendars/Index?IdCourse=@course.IdCourse">
-                                            <img class="img-full" src=~/images/Courses/@course.Image alt=@course.Name>
-                                        </a>
-                                    </div>
-                                    <div class="product-content">
-                                        <a class="product-name" asp-controller="Course" asp-action="Details" asp-route-id=@course.IdCourse>@course.Name</a>
-                                        <div class="price-box pb-1">
-                                            <span class="new-price">$@course.Price</span>
-                                        </div>
-                                    </div>
-                                </div>
-                        }
-                    <!-- Add Arrows -->
-                    <div class="swiper-button-next"></div>
-                    <div class="swiper-button-prev"></div>
+<!-- Begin Main Content Area -->
+<main class="main-content">
+    <div class="breadcrumb-area section-space-top-100">
+        <div class="container h-100">
+            <div class="row h-100">
+                <div class="col-lg-12">
+                    <div class="breadcrumb-item">
+                        <h2 class="breadcrumb-heading">Courses</h2>
+                        <ul>
+                            <li>
+                                <a asp-area="" asp-controller="Home" asp-action="Index">Home <i class="pe-7s-angle-right"></i></a>
+                            </li>
+                            <li>Courses</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+        <div class="container h-100">
+            <div class="row h-100">
+                <div class="col-lg-12">
+                    <div class="swiper-container product-list-slider border-issue course-list">
 
+                        @foreach (var course in Model)
+                        {
+                            <div class="product-list-item col-lg-3 course-item">
+                                <div class="product-img img-zoom-effect">
+                                    <a href="/Calendars/Index?IdCourse=@course.IdCourse">
+                                        <img class="img-full" src=~/images/Courses/@course.Image alt=@course.Name>
+                                    </a>
+                                </div>
+                                <div class="product-content">
+                                    <a href="/Calendars/Index?IdCourse=@course.IdCourse">@course.Name</a>
+                                    <div class="price-box pb-1">
+                                        <span class="new-price">$@course.Price</span>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    <!-- Pagination -->
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination justify-content-center">
+                            @if (PageCurrent > 1)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" href="?IdCategory=@PageCategory&Page=1" aria-label="Previous">
+                                        <span class="fa fa-chevron-left"></span>
+                                    </a>
+                                </li>
+
+                                if (PageNextMinus >= 1)
+                                {
+                                    <li class="page-item"><a class="page-link" href="?IdCategory=@PageCategory&Page=@PageNextMinus">@PageNextMinus</a></li>
+                                }
+
+                                <li class="page-item"><a class="page-link" href="?IdCategory=@PageCategory&Page=@PageBack">@PageBack</a></li>
+                            }
+                            else
+                            {
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="?IdCategory=@PageCategory&Page=1" aria-label="Previous">
+                                        <span class="fa fa-chevron-left"></span>
+                                    </a>
+                                </li>
+                            }
+
+                            <li class="page-item active"><a class="page-link" href="?IdCategory=@PageCategory&Page=@PageCurrent">@PageCurrent</a></li>
+
+                            @if (PageCurrent < PageLength)
+                            {
+                                <li class="page-item"><a class="page-link" href="?IdCategory=@PageCategory&Page=@PageNext">@PageNext</a></li>
+                                if (PageNextPlus <= PageLength)
+                                {
+                                    <li class="page-item"><a class="page-link" href="?IdRole=@PageCategory&Page=@PageNextPlus">@PageNextPlus</a></li>
+                                }
+                                <li class="page-item">
+                                    <a class="page-link" href="?IdCategory=@PageCategory&Page=@PageLength" aria-label="Next">
+                                        <span class="fa fa-chevron-right"></span>
+                                    </a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="?IdCategory=@PageCategory&Page=1" aria-label="Next">
+                                        <span class="fa fa-chevron-right"></span>
+                                    </a>
+                                </li>
+                            }
+
+                        </ul>
+                    </nav>
+                    <!-- End Pagination -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<!-- Main Content Area End Here -->

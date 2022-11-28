@@ -47,7 +47,9 @@ namespace CourseManagement.Areas.Admin.Controllers
                 .Where(x => x.IdStatus == IdStatus)
                 .Include(x => x.IdCalendarNavigation)
                 .Include(x => x.IdStatusNavigation)
-                .OrderBy(x => x.IdStatus).ToList();
+                .OrderBy(x=>x.IdStatus)
+                .ThenByDescending(x=>x.IdContact)
+                .ToList();
             }
             else
             {
@@ -55,7 +57,9 @@ namespace CourseManagement.Areas.Admin.Controllers
                 .AsNoTracking()
                 .Include(x => x.IdCalendarNavigation)
                 .Include(x => x.IdStatusNavigation)
-                .OrderBy(x => x.IdStatus).ToList();
+                .OrderBy(x => x.IdStatus)
+                .ThenByDescending(x => x.IdContact)
+                .ToList();
             }
 
             PagedList<Contact> models = new PagedList<Contact>(lsContacts.AsQueryable(), pageNumber, pageSize);

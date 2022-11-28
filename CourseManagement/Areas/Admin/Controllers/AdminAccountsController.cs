@@ -99,7 +99,7 @@ namespace CourseManagement.Areas.Admin.Controllers
                 }
 
                 account.Password = account.Password.Trim().ToMD5();
-
+          
                 _context.Add(account);
                 await _context.SaveChangesAsync();
                 _notyf.Success("Tạo mới thành công");
